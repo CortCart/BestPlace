@@ -17,4 +17,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BestPlace.Core\BestPlace.Core.csproj" />
+    <ProjectReference Include="..\BestPlace.Infrastructure\BestPlace.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

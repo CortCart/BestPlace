@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace", "BestPlace\BestPlace.csproj", "{4B98082F-28BB-4F0C-8A28-3D3D39E74E76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace", "BestPlace\BestPlace.csproj", "{4B98082F-28BB-4F0C-8A28-3D3D39E74E76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace.Core", "BestPlace.Core\BestPlace.Core.csproj", "{9553B7B1-5365-454A-BA29-011DC259F977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace.Core", "BestPlace.Core\BestPlace.Core.csproj", "{9553B7B1-5365-454A-BA29-011DC259F977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace.Infrastructure", "BestPlace.Infrastructure\BestPlace.Infrastructure.csproj", "{1B9B6255-25C7-46C3-A8ED-171831959827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9553B7B1-5365-454A-BA29-011DC259F977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9553B7B1-5365-454A-BA29-011DC259F977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9553B7B1-5365-454A-BA29-011DC259F977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B9B6255-25C7-46C3-A8ED-171831959827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B9B6255-25C7-46C3-A8ED-171831959827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B9B6255-25C7-46C3-A8ED-171831959827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B9B6255-25C7-46C3-A8ED-171831959827}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
