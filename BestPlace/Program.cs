@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("BestPlaceContextConnection");builder.Services.AddDbContext<BestPlaceContext>(options =>
+var connectionString = builder.Configuration.GetConnectionString("BestPlaceContextConnection");builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<BestPlaceContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>

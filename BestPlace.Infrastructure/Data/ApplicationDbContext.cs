@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BestPlace.Infrastructure.Data;
 
-public class BestPlaceContext : IdentityDbContext<IdentityUser>
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
-    public BestPlaceContext(DbContextOptions<BestPlaceContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
