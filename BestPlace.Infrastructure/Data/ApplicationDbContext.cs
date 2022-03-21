@@ -16,8 +16,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         builder.Entity<ApplicationUser>(x =>
         {
-            x.HasMany(d => d.FavouriteItems).WithOne(e => e.Owner).HasForeignKey(e=>e.OwenerId);
+            x.HasMany(d => d.FavouriteItems).WithOne(e => e.Owner).HasForeignKey(e=>e.OwenerId).OnDelete(DeleteBehavior.Restrict);
         });
+     
         base.OnModelCreating(builder);
     }
 
