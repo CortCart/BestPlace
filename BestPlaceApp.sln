@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace", "BestPlace\Best
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace.Core", "BestPlace.Core\BestPlace.Core.csproj", "{9553B7B1-5365-454A-BA29-011DC259F977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace.Infrastructure", "BestPlace.Infrastructure\BestPlace.Infrastructure.csproj", "{1B9B6255-25C7-46C3-A8ED-171831959827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace.Infrastructure", "BestPlace.Infrastructure\BestPlace.Infrastructure.csproj", "{1B9B6255-25C7-46C3-A8ED-171831959827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,6 +10,10 @@ public class Deal
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
+    [StringLength(20)]
+    public string DealNumber { get; set; }
+
+    [Required]
     public Guid DeliveryId { get; set; }
 
     [ForeignKey(nameof(DeliveryId))]
