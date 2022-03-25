@@ -1,4 +1,6 @@
-﻿using BestPlace.Infrastructure.Data.Identity;
+﻿using System.Collections.Immutable;
+using System.Security.Cryptography.X509Certificates;
+using BestPlace.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +12,60 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        this.Database.EnsureCreated();
     }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<ApplicationUser>(x =>
-        {
-            x.HasMany(d => d.FavouriteItems).WithOne(e => e.Owner).HasForeignKey(e=>e.OwenerId).OnDelete(DeleteBehavior.Restrict);
-        });
-     
+        builder.Entity<Item>()
+            .HasOne(x => x.Owner)
+            .WithMany(x => x.MyItems);
+
+
+        builder.Entity<Deal>().HasKey(x => x.Id);
+
+        builder.Entity<Deal>().HasOne(x => x.BuyerUser)
+            .WithMany(d => d.DealsAsBuyer)
+            .HasForeignKey(x => x.BuyerUserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            ;
+
+        builder.Entity<Deal>().HasOne(x=>x.Delivery)
+            .WithMany()
+            .HasForeignKey(x=>x.DeliveryId)
+            .OnDelete(DeleteBehavior.Restrict)
+           ;
+
+        builder.Entity<Deal>().HasOne(x => x.Item)
+            .WithMany()
+            .HasForeignKey(x => x.ItemId)
+            .OnDelete(DeleteBehavior.Restrict)
+            ;
+
+        builder.Entity<Deal>().HasOne(x=>x.ExOwner)
+            .WithMany(c=>c.DealsAsOwner)
+            .HasForeignKey(x=>x.ExOwnerId)
+            .OnDelete(DeleteBehavior.Restrict)
+            ;
+
+        //builder.Entity<Deal>()
+        //    .HasOne(s => s.Buyer)
+        //    .WithMany(x=>x.DealsAsBuyer)
+        //    .HasForeignKey(x=>x.BuyerId)
+        //    .IsRequired();
+        //;
+            
+
+        //builder.Entity<Deal>()
+        //    .HasOne(s => s.Owner)
+        //    .WithMany(x => x.DealsAsOwner)
+        //    .HasForeignKey(x => x.OwenerId)
+        //    .IsRequired();
+        
+
+
+
         base.OnModelCreating(builder);
     }
 
@@ -28,7 +75,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Delivery> Deliveries { get; set; }
 
-    public DbSet<Image> Images { get; set; }
+    public DbSet<Questionnaire> Questionnaires { get; set; }
+
+    public DbSet<SubmitQuestionnaire> SubmitQuestionnaires { get; set; }
 
     public DbSet<Item> Items { get; set; }
+
+    public DbSet<ItemImages> ItemImages { get; set; }
 }

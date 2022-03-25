@@ -22,5 +22,5 @@ public class AddItemViewModel
 
     public string Category { get; set; }
 
-    public ICollection<Image> Images { get; set; } = new List<Image>();
+    public ICollection<byte[]> Images { get; set; } = new List<byte[]>();
 }

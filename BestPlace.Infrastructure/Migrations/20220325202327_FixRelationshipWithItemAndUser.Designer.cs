@@ -4,6 +4,7 @@ using BestPlace.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestPlace.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220325202327_FixRelationshipWithItemAndUser")]
+    partial class FixRelationshipWithItemAndUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,26 +221,6 @@ namespace BestPlace.Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.ItemImages", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("Source")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("ItemImages");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Questionnaire", b =>
@@ -480,17 +462,6 @@ namespace BestPlace.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.ItemImages", b =>
-                {
-                    b.HasOne("BestPlace.Infrastructure.Data.Item", "Item")
-                        .WithMany("Images")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-                });
-
             modelBuilder.Entity("BestPlace.Infrastructure.Data.SubmitQuestionnaire", b =>
                 {
                     b.HasOne("BestPlace.Infrastructure.Data.Questionnaire", "Questionnaire")
@@ -573,11 +544,6 @@ namespace BestPlace.Infrastructure.Migrations
                     b.Navigation("DealsAsOwner");
 
                     b.Navigation("MyItems");
-                });
-
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.Item", b =>
-                {
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Questionnaire", b =>

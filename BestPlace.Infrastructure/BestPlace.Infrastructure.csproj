@@ -16,6 +16,7 @@
     <Folder Include="Data\Identity\" />
     <Folder Include="Data\Common\" />
     <Folder Include="Data\Repositories\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

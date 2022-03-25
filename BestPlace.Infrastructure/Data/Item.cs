@@ -21,12 +21,12 @@ public class Item
     [Required]
     public decimal Price { get; set; }
 
-    public int Likes { get; set; }
+    public int Likes { get; set; } = 0;
 
     [Required]
-    public string OwenerId { get; set; }
+    public string OwnerId { get; set; }
 
-    [ForeignKey(nameof(OwenerId))]
+    [ForeignKey(nameof(OwnerId))]
     public ApplicationUser Owner { get; set; }
 
     [Required]
@@ -35,5 +35,5 @@ public class Item
     [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; }
 
-    public ICollection<Image> Images { get; set; } = new List<Image>();
+    public ICollection<ItemImages> Images { get; set; } = new List<ItemImages>();
 }
