@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BestPlace.Api\BestPlace.Api.csproj" />
     <ProjectReference Include="..\BestPlace.Core\BestPlace.Core.csproj" />
     <ProjectReference Include="..\BestPlace.Infrastructure\BestPlace.Infrastructure.csproj" />
   </ItemGroup>

@@ -33,8 +33,8 @@
                                            <div class="profile_img">
                                            @foreach (var image in @Model.Images)
                                            {
-@*                                               <img width="180" class="img-responsive" src="@Url.Action("Image", "Item", new { id = image.Id })"/>
-*@
+                                            <img width="180" class="img-responsive" src="@Url.Action("Get", "Image", new { id = image.Id })"/>
+
                                            }
                                                </div>
                                           <div class="profile_contant">

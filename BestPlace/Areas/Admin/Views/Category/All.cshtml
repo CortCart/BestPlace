@@ -37,6 +37,7 @@
                                        {
                                            <tr>
                                                <td>  @category.Name</td>
+                                               <td>   <img width="180" class="img-responsive" src="@Url.Action( "GetCategoryImage", "Image", new { id = category.Id })"/></td>
                                                <th><a asp-area="admin" asp-action="Remove" asp-controller="Category" asp-route-id ="@category.Id">Remove</a></th>
                                                <th><a asp-area="admin" asp-action="Edit" asp-controller="Category" asp-route-id ="@category.Id">Edit</a></th>
                                            </tr>

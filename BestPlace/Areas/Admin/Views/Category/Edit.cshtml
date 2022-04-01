@@ -22,7 +22,10 @@
                                <label class="label_field">Category name</label>
                               <input type="text" asp-for="Name" name="name" value="@Model.Name" />
                            </div>
-                          
+                            <div class="field">
+                                <label class="label_field">Password</label>
+                                <input type="file" asp-for="Image" name="Image" value=@Url.Action("GetCategoryImage", "Image", new { id = @Model.Id }) />
+                            </div>
                             <div class="field margin_0">
                               <label class="label_field hidden">hidden label</label>
                               <button type="submit" value="Upload" class="main_bt">Edit</button>

@@ -39,10 +39,5 @@ namespace BestPlace.Areas.Admin.Controllers
             return View(item);
         }
 
-        //public async Task<IActionResult> GetImage(Guid id)
-        //{
-        //    var image = await this.imageService.GetImageItem(id);
-        //    return File(image, "image/png");
-        //}
     }
 }
