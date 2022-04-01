@@ -29,6 +29,9 @@ public class Item
     [ForeignKey(nameof(OwnerId))]
     public ApplicationUser Owner { get; set; }
 
+    public bool IsBought { get; set; } = false;
+
+
     [Required]
     public Guid CategoryId { get; set; }
 

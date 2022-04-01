@@ -5,9 +5,13 @@ namespace BestPlace.Core.Contracts;
 
 public interface IItemService
 {
-    Task Add(AddItemViewModel model);
+    Task<IEnumerable<ItemListViewModel>> All();
 
-    Task Edit(AddItemViewModel model);
+    Task<ItemDetailsViewModel> GetItemDetails(Guid id);
 
-    Task Remove();
+    Task Add(ItemAddViewModel model);
+
+    Task Edit(ItemAddViewModel model);
+
+    Task<bool> DeleteItem(Guid id);
 }

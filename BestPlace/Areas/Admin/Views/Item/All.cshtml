@@ -1,0 +1,62 @@
+﻿@using BestPlace.Core.Models.Item
+@model IEnumerable<ItemListViewModel>
+@{
+    ViewData["Title"] = "All";
+}
+ <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Tables</h2>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- row -->
+                     <div class="row">
+                       
+                        <!-- table section -->
+                        <div class="col-md-12">
+                           <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Item table</h2>
+                                 </div>
+                              </div>
+                              <div class="table_section padding_infor_info">
+                                 <div class="table-responsive-sm">
+                                    <table class="table">
+                                       <thead>
+                                          <tr>
+                                             <th>Label</th>
+                                             <th>Likes</th>
+                                              <th>Price</th>
+                                              <th>Owner</th>
+                                              <th>Category</th>
+                                              <th>Owner</th>
+
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       @foreach ( var item in @Model)
+                                       {
+                                           <tr>
+                                               <td>  @item.Label</td>
+                                               <td>@item.Likes</td>
+                                               <td>@item.Price</td>
+                                               <th><a asp-area="admin" asp-action="Details" asp-controller="User" asp-route-id ="@item.OwnerId">@item.Owner</a></th>
+                                               <th><a >@item.CategoryName</a></th>
+                                               <th><a asp-area="admin" asp-action="Remove" asp-controller="Item" asp-route-id ="@item.Id"> Remove</a></th>
+                                               <th><a asp-area="admin" asp-action="Details" asp-controller="Item" asp-route-id ="@item.Id">Info</a></th>
+                                           </tr>
+                                       }
+                                      
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+ </div>

@@ -1,5 +1,8 @@
-﻿using BestPlace.Core.Contracts;
+﻿using System.ComponentModel;
+using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.Item;
+using BestPlace.Infrastructure.Data;
+using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,18 +17,69 @@ public class ItemService : IItemService
         this.repository = repository;
     }
 
-    public async Task Add(AddItemViewModel model)
+    public async Task<IEnumerable<ItemListViewModel>> All()
+    {
+        var  items = await  this.repository.All<Item>()
+            .Select(x=>new ItemListViewModel
+            {
+              Id  = x.Id,
+              Label = x.Label,
+              Likes = x.Likes,
+              CategoryId = x.CategoryId,
+              CategoryName = x.Category.Name,
+              OwnerId = x.OwnerId,
+              Owner = $"{x.Owner.FirstName} {x.Owner.LastName}"
+            }).ToListAsync();
+      return items; 
+    }
+
+    public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
+    {
+        var item = await this.repository.All<Item>()
+            .Where(x => x.Id == id)
+            .Select(x => new ItemDetailsViewModel
+            {
+                Id = x.Id,
+                Label = x.Label,
+                Description = x.Description,
+                IsBought = x.IsBought,
+                OwnerId = x.OwnerId,
+                OwnerName = $"{x.Owner.FirstName} {x.Owner.LastName}",
+                CategoryId = x.CategoryId,
+                CategoryName = x.Category.Name,
+                Images = x.Images.Select(y=>new ItemImageDetailsViewModel
+                {
+                   Id = y.Id,
+                   Source = y.Source
+                }).ToList()
+            }).FirstOrDefaultAsync();
+        item.BuyerId = await this.repository.All<Deal>().Where(x=>x.ItemId==item.Id).Select(x=>x.BuyerUserId).FirstOrDefaultAsync();
+        item.BuyerName = await this.repository.All<Deal>().Where(x => x.ItemId == item.Id).Select(x => $"{x.BuyerUser.FirstName} {x.BuyerUser.LastName}").FirstOrDefaultAsync();
+        return item;
+    }
+
+    public async Task Add(ItemAddViewModel model)
     {
         throw new NotImplementedException();
     }
 
-    public Task Edit(AddItemViewModel model)
+    public Task Edit(ItemAddViewModel model)
     {
         throw new NotImplementedException();
     }
 
-    public Task Remove()
+    public async Task<bool> DeleteItem(Guid id)
     {
-        throw new NotImplementedException();
+        var item = await this.repository.GetByIdAsync<Item>(id);
+        if (item == null)
+        {
+            return false;
+        }
+
+        this.repository.Delete<Item>(item);
+        await this.repository.SaveChangesAsync();
+
+        return true;
     }
+
 }

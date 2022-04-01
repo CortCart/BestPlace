@@ -12,7 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        this.Database.EnsureCreated();
+        //this.Database.EnsureCreated();
     }
 
 
@@ -48,22 +48,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasForeignKey(x=>x.ExOwnerId)
             .OnDelete(DeleteBehavior.Restrict)
             ;
-
-        //builder.Entity<Deal>()
-        //    .HasOne(s => s.Buyer)
-        //    .WithMany(x=>x.DealsAsBuyer)
-        //    .HasForeignKey(x=>x.BuyerId)
-        //    .IsRequired();
-        //;
-            
-
-        //builder.Entity<Deal>()
-        //    .HasOne(s => s.Owner)
-        //    .WithMany(x => x.DealsAsOwner)
-        //    .HasForeignKey(x => x.OwenerId)
-        //    .IsRequired();
-        
-
 
 
         base.OnModelCreating(builder);
