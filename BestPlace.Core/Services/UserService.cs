@@ -3,17 +3,23 @@ using BestPlace.Core.Models.User;
 using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BestPlace.Core.Services;
 
 public class UserService:IUserService
 {
+
+    private readonly UserManager<ApplicationUser> userManager;
+
+
     private readonly IApplicatioDbRepository repository;
 
-    public UserService(IApplicatioDbRepository repository)
+    public UserService(IApplicatioDbRepository repository, UserManager<ApplicationUser> userManager)
     {
         this.repository = repository;
+        this.userManager = userManager;
     }
     public async Task<IEnumerable<UserListViewModel>> GetUsers()
     {
@@ -57,6 +63,9 @@ public class UserService:IUserService
             })
             .ToListAsync();
 
+        var userRoles = await userManager.GetRolesAsync(user);
+
+
         return new UserDetailsViewModel()
         {
             FirstName = user.FirstName,
@@ -65,7 +74,8 @@ public class UserService:IUserService
             Address = user.Address,
             Phone = user.Phone,
             DealsAsBuyer = dealAsBuyer,
-            DealsAsOwner = dealAsOwner
+            DealsAsOwner = dealAsOwner,
+            Roles = userRoles
         };
     }
 

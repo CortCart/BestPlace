@@ -31,5 +31,7 @@ public class UserDetailsViewModel
 
     public ICollection<UserDealAsBuyerViewModel> DealsAsBuyer { get; set; } = new List<UserDealAsBuyerViewModel>();
 
+    public ICollection<string> Roles { get; set; } = new List<string>();
+
     public ICollection<UserDealAsOwnerViewModel> DealsAsOwner { get; set; } = new List<UserDealAsOwnerViewModel>();
 }

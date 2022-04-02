@@ -51,38 +51,65 @@
                                              <div class="tabbar">
                                                 <nav>
                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#recent_activity" role="tab" aria-selected="true">Deal as owner</a>
-                                                      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Deal as buyer</a>
-                                                   </div>
+                                                      <a class="nav-item nav-link active" id="dealAsOwner" data-toggle="tab" href="#recent_activity" role="tab" aria-selected="true">Deal as owner</a>
+                                                      <a class="nav-item nav-link" id="dealAsBuyer" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Deal as buyer</a>
+                                                       <a class="nav-item nav-link" id="role" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Roles</a>
+
+                                                       </div>
                                                 </nav>
                                                 <div class="tab-content" id="nav-tabContent">
-                                                   <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                   <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="dealAsOwner">
                                                       <div class="msg_list_main">
                                                           <ul class="msg_list">
-                                                              @foreach (var dealAsOwner in  @Model.DealsAsOwner)
-                                                              {
-                                                                  <li>
-                                                                      <span>
-                                                                          <span class="name_user"><a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@dealAsOwner.BuyerId">Buyer name: @dealAsOwner.BuyerName</a> </span>
-                                                                          <span class="msg_user"><a asp-area="Admin" asp-controller="Item"  asp-action="Details" asp-route-id="@dealAsOwner.ItemId">Item name: @dealAsOwner.ItemName</a>.</span>
-                                                                      </span>
-                                                                  </li>
-                                                              }
+                                                              Deal as owner
+                                                              @Html.Raw("------\n")
+                                                              <li>
+                                                                  @foreach (var dealAsOwner in  @Model.DealsAsOwner)
+                                                                  {
+                                                                      <span class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsOwner.BuyerId">Buyer name: @dealAsOwner.BuyerName</a> </span>
+                                                                      <span class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsOwner.ItemId">Item name: @dealAsOwner.ItemName</a></span>
+                                                                      @Html.Raw("------\n")
+                                                                      
+                                                                  }
+                                                              </li>
+
                                                           </ul>
                                                       </div>
                                                    </div>
-                                                    <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                    <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="dealAsBuyer">
                                                         <div class="msg_list_main">
                                                             <ul class="msg_list">
-                                                                @foreach (var dealAsBuyer in  @Model.DealsAsBuyer)
-                                                                {
+                                                                Deal as buyer
+                                                                @Html.Raw("------\n")
                                                                     <li>
-                                                                        <span>
-                                                                            <span class="name_user"><a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@dealAsBuyer.ExOwnerId">ExOwner name: @dealAsBuyer.ExOwnerName</a> </span>
-                                                                            <span class="msg_user"><a asp-area="Admin" asp-controller="Item"  asp-action="Details" asp-route-id="@dealAsBuyer.ItemId">Item name: @dealAsBuyer.ItemName</a>.</span>
-                                                                        </span>
+                                                                    @foreach (var dealAsBuyer in  @Model.DealsAsBuyer)
+                                                                    {
+                                                                        <span class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsBuyer.ExOwnerId">ExOwner name: @dealAsBuyer.ExOwnerName</a> </span>
+                                                                        <span class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsBuyer.ItemId">Item name: @dealAsBuyer.ItemName</a>.</span>
+                                                                        @Html.Raw("------\n")
+
+                                                                    }
                                                                     </li>
-                                                                }
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="role">
+                                                        <div class="tab-pane fade" id="project_worked" role="tabpanel" aria-labelledby="Roles">
+
+                                                            <ul class="msg_list">
+                                                                
+                                                                <li>
+                                                                    Roles
+                                                                  ---
+                                                                    @foreach (var role in  @Model.Roles)
+                                                                    {
+                                                                        <a class="name_user">@role </a>
+                                                                       
+                                                                    }
+                                                                    --
+                                                                </li>
+                                                               
                                                             </ul>
                                                         </div>
                                                     </div>

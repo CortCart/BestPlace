@@ -1,0 +1,33 @@
+﻿@using BestPlace.Core.Models.Roles
+@model RoleAddViewModel
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="full_container">
+    <div class="container">
+        <div class="center verticle_center full_height">
+            <div class="login_section">
+                <div class="logo_login">
+                    <div class="center">
+                        <img width="210" src="images/logo/logo.png" alt="#" />
+                    </div>
+                </div>
+                <div class="login_form">
+                    <form method="post" >
+                        ">
+                        <fieldset>
+                            <div class="field">
+                                <label class="label_field">Role name</label>
+                                <input type="text" asp-for="Name" name="name" />
+                            </div>
+                            <div class="field margin_0">
+                                <label class="label_field hidden">hidden label</label>
+                                <button type="submit" value="Upload" class="main_bt">Add</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -99,6 +99,17 @@
                               </li>
                           </ul>
                       </li>
+                      <li class="active">
+                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Role</span></a>
+                          <ul class="list-unstyled collapse show">
+                              <li>
+                                  <a asp-area="Admin" asp-controller="Role" asp-action="All">> <span>Roles</span></a>
+                              </li>
+                              <li>
+                                  <a asp-area="Admin" asp-controller="Role" asp-action="Add">> <span>Add</span></a>
+                              </li>
+                          </ul>
+                      </li>
 
                   </ul>
                </div>
@@ -120,17 +131,6 @@
                                     <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
                                     <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
                                     <li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a></li>
-                                </ul>
-                                <ul class="user_profile_dd">
-                                    <li>
-                                        <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="~/Admin/images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="profile.html">My Profile</a>
-                                            <a class="dropdown-item" href="settings.html">Settings</a>
-                                            <a class="dropdown-item" href="help.html">Help</a>
-                                            <a class="dropdown-item" href="#"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>

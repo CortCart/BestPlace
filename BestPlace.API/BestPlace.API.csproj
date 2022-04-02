@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BestPlace.Core\BestPlace.Core.csproj" />
     <ProjectReference Include="..\BestPlace.Infrastructure\BestPlace.Infrastructure.csproj" />
   </ItemGroup>

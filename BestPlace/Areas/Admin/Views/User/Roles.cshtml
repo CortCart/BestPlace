@@ -1,0 +1,52 @@
+﻿@using BestPlace.Core.Models.User
+@model UserRolesViewModel
+@{
+    ViewData["Title"] = "User Roles";
+    var items = (List<SelectListItem>)ViewBag.RoleItems;
+}
+
+<div class="col-md-6">
+   <div class="white_shd full margin_bottom_30">
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Tab Bar Style 1</h2>
+                                 </div>
+                              </div>
+                              <div class="full inner_elements">
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <div class="tab_style1">
+                                          <div class="tabbar padding_infor_info">
+                                              <nav>
+        
+                                              </nav>
+                                              <form id="roles" method="post" class="tab-content" id="nav-tabContent">
+                                              <input type="hidden" name="UserId" value="@Model.UserId" />
+                                              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                              <div class="form-floating">
+                                                  <h3>User: @Html.DisplayFor(m => m.Name)</h3>
+                                              </div>
+                                              <div class="form-floating">
+                                                  <div class="form-group">
+                                                      <label>User Roles</label>
+                                                      <select asp-for="RoleNames" asp-items="@items" multiple="" class="form-control">
+
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="row">&nbsp;</div>
+                                              <div class="row">
+                                                  <div class="col-4">
+                                                      <button id="login-submit" type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                  </div>
+                                                  <!-- /.col -->
+                                              </div>
+                                              </form>
+
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>

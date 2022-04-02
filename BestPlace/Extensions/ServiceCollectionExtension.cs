@@ -19,6 +19,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IDealService, DealService>();
         services.AddScoped<IQuestionnaireService, QuestionnaireService>();
+        services.AddScoped<IRoleService, RoleService>();
 
         services.AddScoped<IImageService, ImageService>();
 

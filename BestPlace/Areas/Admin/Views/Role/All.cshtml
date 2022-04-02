@@ -1,5 +1,5 @@
-﻿@using BestPlace.Core.Models.User
-@model IEnumerable<UserListViewModel>
+﻿@using BestPlace.Core.Models.Roles
+@model IEnumerable<RoleListViewModel>
 @{
     ViewData["Title"] = "All";
 }
@@ -20,7 +20,7 @@
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
-                                    <h2>User table</h2>
+                                    <h2>Role table</h2>
                                  </div>
                               </div>
                               <div class="table_section padding_infor_info">
@@ -28,25 +28,15 @@
                                     <table class="table">
                                        <thead>
                                           <tr>
-                                             <th>Email</th>
                                              <th>Name</th>
-                                              <th>Address</th>
-                                              <th>Phone</th>
-    
+
                                           </tr>
                                        </thead>
                                        <tbody>
-                                       @foreach ( var user in @Model)
+                                       @foreach ( var role in @Model)
                                        {
                                            <tr>
-                                               <td>  @user.Email</td>
-                                               <td>@user.Name</td>
-                                               <td>@user.Address</td>
-                                               <td>@user.Phone</td>
-                                               <th><a asp-area="admin" asp-action="Remove" asp-controller="User" asp-route-id ="@user.Id"> Remove</a></th>
-                                               <th><a asp-area="admin" asp-action="Details" asp-controller="User" asp-route-id ="@user.Id">Info</a></th>
-                                               <th><a asp-area="admin" asp-action="Roles" asp-controller="User" asp-route-id ="@user.Id"> Roles</a></th>
-
+                                               <td>  @role.Name</td>
                                                </tr>
                                        }
                                       
