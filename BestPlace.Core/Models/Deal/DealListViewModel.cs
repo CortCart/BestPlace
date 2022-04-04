@@ -1,9 +1,10 @@
-﻿namespace BestPlace.Core.Models.Deal;
+﻿namespace BestPlace.Core.Models;
 
 public class DealListViewModel
-{ 
-    public Guid Id { get; set; }
+{
+    public Guid DealId { get; set; }
 
     public string DealFor { get; set; }
+
 
 }

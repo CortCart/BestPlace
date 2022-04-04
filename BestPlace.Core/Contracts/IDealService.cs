@@ -1,4 +1,5 @@
-﻿using BestPlace.Core.Models.Deal;
+﻿using BestPlace.Core.Models;
+using BestPlace.Core.Models.Deal;
 
 namespace BestPlace.Core.Contracts;
 

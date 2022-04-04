@@ -1,4 +1,6 @@
-﻿using BestPlace.Core.Contracts;
+﻿using System.Linq;
+using BestPlace.Core.Contracts;
+using BestPlace.Core.Models;
 using BestPlace.Core.Models.Deal;
 using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Repositories;
@@ -20,7 +22,7 @@ public class DealService:IDealService
         var deals = await this.repository.All<Deal>()
             .Select(x => new DealListViewModel()
             {
-                Id = x.Id,
+                DealId = x.Id,
                 DealFor = x.Item.Label,
             }).ToListAsync();
 
