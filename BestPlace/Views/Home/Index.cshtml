@@ -1,8 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using BestPlace.Core.Models.Category
+@model IEnumerable<CategoryListViewModel>
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="clean-block clean-services dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Main categories</h2>
+        </div>
+        <div class="row">
+            @foreach (var category in @Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card"><img class="card-img-top w-100 d-block" src="@Url.Action( "GetCategoryImage", "Image", new { id = category.Id })">
+                        <div class="card-body">
+                            <h4 class="card-title">@category.Name</h4>
+                        </div>
+                        <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

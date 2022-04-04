@@ -1,21 +1,25 @@
 ﻿using BestPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using BestPlace.Core.Contracts;
 
 namespace BestPlace.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly ICategoryService categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICategoryService categoryService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var categories = await this.categoryService.All();
+            return View(categories);
         }
 
         public IActionResult Privacy()
