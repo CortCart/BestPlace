@@ -1,4 +1,4 @@
-﻿@using BestPlace.Core.Models.Deal
+﻿@using BestPlace.Core.Models
 @model IEnumerable<DealListViewModel>
 @{
     ViewData["Title"] = "All";
@@ -36,7 +36,7 @@
                                        {
                                            <tr>
                                                <td>  @deal.DealFor</td>
-                                               <th><a asp-area="admin" asp-action="Details" asp-controller="Deal" asp-route-id ="@deal.Id">Details</a></th>
+                                               <th><a asp-area="admin" asp-action="Details" asp-controller="Deal" asp-route-id ="@deal.DealId">Details</a></th>
                                            </tr>
                                        }
                                       
