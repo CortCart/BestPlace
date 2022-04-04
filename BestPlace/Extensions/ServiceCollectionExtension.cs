@@ -20,7 +20,6 @@ public static class ServiceCollectionExtension
         services.AddScoped<IDealService, DealService>();
         services.AddScoped<IQuestionnaireService, QuestionnaireService>();
         services.AddScoped<IRoleService, RoleService>();
-
         services.AddScoped<IImageService, ImageService>();
 
         // services.AddRazorPages();

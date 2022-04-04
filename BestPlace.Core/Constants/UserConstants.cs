@@ -4,8 +4,8 @@ public static class UserConstants
 {
     public static class Roles
     {
-        public const string Administrator = "Administrator";
+        public const string Administrator = "Admin";
 
-        public const string Manager = "Administrator,Manager";
+        public const string Manager = "Admin, Manager";
     }
 }

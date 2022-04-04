@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using BestPlace.Infrastructure.Data.Identity
+@using System.Security.Claims
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -13,11 +14,14 @@
         <i class="fas fa-door-open"></i>
         <button type="submit" class="nav-link btn btn-link text-dark">Log Out</button>
     </form>
-}
+    if (User.IsInRole("Admin"))
+    {
+        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Admin</a></li>
+    }
+}  
 else
 {
     <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
     <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Dashboard">Admin</a></li>
 }
 </ul>
