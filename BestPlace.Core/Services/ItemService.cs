@@ -4,6 +4,7 @@ using BestPlace.Core.Models.Item;
 using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BestPlace.Core.Services;
@@ -58,9 +59,51 @@ public class ItemService : IItemService
         return item;
     }
 
-    public async Task Add(ItemAddViewModel model)
+    public async Task Add(ItemAddViewModel model , string userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var item = new Item()
+            {
+                Label = model.Label,
+                Description = model.Description,
+                CategoryId = Guid.Parse(model.Category),
+                Price = model.Price,
+                OwnerId = userId,
+            };
+            var images = new List<ItemImages>();
+            foreach (var image in model.Images  )
+            {
+                byte[] bytes = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+
+                    image.OpenReadStream().CopyTo(ms);
+
+                    bytes = ms.ToArray();
+
+                }
+
+                var  img = new ItemImages()
+                {
+                    ItemId = item.Id,
+                    Source = bytes
+                };
+
+                images.Add(img);
+                await this.repository.AddAsync(img);
+
+            }
+
+
+            await this.repository.AddAsync(item);
+
+            await this.repository.SaveChangesAsync();
+        }
+        catch 
+        {
+           
+        }
     }
 
     public Task Edit(ItemAddViewModel model)

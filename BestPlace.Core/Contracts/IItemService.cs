@@ -9,7 +9,7 @@ public interface IItemService
 
     Task<ItemDetailsViewModel> GetItemDetails(Guid id);
 
-    Task Add(ItemAddViewModel model);
+    Task Add(ItemAddViewModel model, string id);
 
     Task Edit(ItemAddViewModel model);
 

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace BestPlace.Core.Models.Item;
 
@@ -20,7 +21,9 @@ public class ItemAddViewModel
     [Required]
     public decimal Price { get; set; }
 
+    [Required]
     public string Category { get; set; }
 
-    public ICollection<byte[]> Images { get; set; } = new List<byte[]>();
+    [MinLength(1, ErrorMessage = "The field Images must have at least 1 image")]
+    public ICollection<IFormFile> Images { get; set; } = new List<IFormFile>();
 }
