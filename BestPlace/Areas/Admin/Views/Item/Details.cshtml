@@ -23,7 +23,7 @@
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
-                                    <h2>Item info</h2>
+                                    <h2>@Model.Label</h2>
                                  </div>
                               </div>
                               <div class="full price_table padding_infor_info">
@@ -37,45 +37,24 @@
 
                                            }
                                                </div>
-                                          <div class="profile_contant">
-                                             <div class="contact_inner">
-                                                <h3>@Model.Label</h3>
-                                                <ul class="list-unstyled">
-                                                    <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.OwnerId">Owner : @Model.OwnerName</a> </li>
-                                                    <li ><i></i>Is bought : @Model.IsBought</li>
-                                                    @if (@Model.IsBought)
-                                                    {
-                                                        <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.BuyerId">Buyer : @Model.BuyerName</a> </li>
-                                                    }
-                                                    <li><i class="fa fa-phone"></i> : @Model.Price</li>
-                                                    <li><i ></i>Category : @Model.CategoryName</li>
-                                                </ul>
-                                             </div>
-                                          </div>
+                                           <div class="profile_contant">
+                                               <div class="contact_inner">
+                                                   <h3>@Model.Label</h3>
+                                                   <ul class="list-unstyled">
+                                                       <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.OwnerId">Owner : @Model.OwnerName</a> </li>
+                                                       <li ><i></i>Is bought : @Model.IsBought</li>
+                                                       @if (@Model.IsBought)
+                                                       {
+                                                           <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.BuyerId">Buyer : @Model.BuyerName</a> </li>
+                                                       }
+                                                       <li><i class="fa fa-phone"></i> : @Model.Price</li>
+                                                       <li><i ></i>Category : @Model.CategoryName</li>
+                                                   </ul>
+                                               </div>
+                                           </div>
+                                           <p> @Model.Description</p>
                                        </div>
-                                       <!-- profile contant section -->
-                                       <div class="full inner_elements margin_top_30">
-                                          <div class="tab_style2">
-                                             <div class="tabbar">
-                                                <nav>
-                                                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#recent_activity" role="tab" aria-selected="true">Description</a>
-                                                   </div>
-                                                </nav>
-                                                <div class="tab-content" id="nav-tabContent">
-                                                   <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                      <div class="msg_list_main">
-                                                          <ul class="msg_list">
-                                                              @Model.Description
-                                                          </ul>
-                                                      </div>
-                                                   </div>
-                                           
-                                                </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <!-- end user profile section -->
+
                                     </div>
                                  </div>
                               </div>

@@ -30,94 +30,55 @@
                                     <!-- user profile section --> 
                                     <!-- profile image -->
                                     <div class="col-lg-12">
-                                       <div class="full dis_flex center_text">
-                                           <div class="profile_img">
-                                               <img width="180" class="img-responsive" src="images/layout_img/user_img.jpg" alt="#"/>
-                                           </div>
-                                          <div class="profile_contant">
-                                             <div class="contact_inner">
-                                                <h3>@Model.FirstName @Model.LastName</h3>
-                                                <ul class="list-unstyled">
-                                                   <li><i class="fa fa-envelope-o"></i> : @Model.Email</li>
-                                                    <li><i class="fa fa-phone"></i> : @Model.Phone</li>
-                                                    <li><i class="fa  fa-home"></i> : @Model.Address</li>
-                                                </ul>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <!-- profile contant section -->
-                                       <div class="full inner_elements margin_top_30">
-                                          <div class="tab_style2">
-                                             <div class="tabbar">
-                                                <nav>
-                                                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                      <a class="nav-item nav-link active" id="dealAsOwner" data-toggle="tab" href="#recent_activity" role="tab" aria-selected="true">Deal as owner</a>
-                                                      <a class="nav-item nav-link" id="dealAsBuyer" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Deal as buyer</a>
-                                                       <a class="nav-item nav-link" id="role" data-toggle="tab" href="#project_worked" role="tab" aria-selected="false">Roles</a>
-
-                                                       </div>
-                                                </nav>
-                                                <div class="tab-content" id="nav-tabContent">
-                                                   <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="dealAsOwner">
-                                                      <div class="msg_list_main">
-                                                          <ul class="msg_list">
-                                                              Deal as owner
-                                                              @Html.Raw("------\n")
-                                                              <li>
-                                                                  @foreach (var dealAsOwner in  @Model.DealsAsOwner)
-                                                                  {
-                                                                      <span class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsOwner.BuyerId">Buyer name: @dealAsOwner.BuyerName</a> </span>
-                                                                      <span class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsOwner.ItemId">Item name: @dealAsOwner.ItemName</a></span>
-                                                                      @Html.Raw("------\n")
-                                                                      
-                                                                  }
-                                                              </li>
-
-                                                          </ul>
-                                                      </div>
-                                                   </div>
-                                                    <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="dealAsBuyer">
-                                                        <div class="msg_list_main">
-                                                            <ul class="msg_list">
-                                                                Deal as buyer
-                                                                @Html.Raw("------\n")
-                                                                    <li>
-                                                                    @foreach (var dealAsBuyer in  @Model.DealsAsBuyer)
-                                                                    {
-                                                                        <span class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsBuyer.ExOwnerId">ExOwner name: @dealAsBuyer.ExOwnerName</a> </span>
-                                                                        <span class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsBuyer.ItemId">Item name: @dealAsBuyer.ItemName</a>.</span>
-                                                                        @Html.Raw("------\n")
-
-                                                                    }
-                                                                    </li>
-                                                                
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tab-pane fade show active" id="recent_activity" role="tabpanel" aria-labelledby="role">
-                                                        <div class="tab-pane fade" id="project_worked" role="tabpanel" aria-labelledby="Roles">
-
-                                                            <ul class="msg_list">
-                                                                
-                                                                <li>
-                                                                    Roles
-                                                                  ---
-                                                                    @foreach (var role in  @Model.Roles)
-                                                                    {
-                                                                        <a class="name_user">@role </a>
-                                                                       
-                                                                    }
-                                                                    --
-                                                                </li>
-                                                               
-                                                            </ul>
-                                                        </div>
-                                                    </div>
+                                        <div class="full dis_flex center_text">
+                                            <div class="profile_img">
+                                                <img width="180" class="img-responsive" src="images/layout_img/user_img.jpg" alt="#"/>
+                                            </div>
+                                            <div class="profile_contant">
+                                                <div class="contact_inner">
+                                                    <h3>@Model.FirstName @Model.LastName</h3>
+                                                    <ul class="list-unstyled">
+                                                        <li><i class="fa fa-envelope-o"></i> : @Model.Email</li>
+                                                        <li><i class="fa fa-phone"></i> : @Model.Phone</li>
+                                                        <li><i class="fa  fa-home"></i> : @Model.Address</li>
+                                                    </ul>
                                                 </div>
-                                             </div>
-                                          </div>
-                                       </div>
-                                       <!-- end user profile section -->
+                                            </div>
+                                        </div>
+                                        
+                                        Deal as owner
+                                                            
+                                        <li>
+                                            @foreach (var dealAsOwner in  @Model.DealsAsOwner)
+                                            {
+
+                                                <p class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsOwner.BuyerId">Buyer name: @dealAsOwner.BuyerName Proba </a> </p>
+                                                <p class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsOwner.ItemId">Item name: @dealAsOwner.ItemName Proba</a></p>
+                                                @Html.Raw("------\n")
+                                                                      
+                                            }
+
+                                        </li>
+                                        
+                                        Deal as buyer
+                                        <li>
+                                            @foreach (var dealAsBuyer in  @Model.DealsAsBuyer)
+                                            {
+                                                <p class="name_user"><a asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-id="@dealAsBuyer.ExOwnerId">ExOwner name: @dealAsBuyer.ExOwnerName</a> </p>
+                                                <p class="msg_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@dealAsBuyer.ItemId">Item name: @dealAsBuyer.ItemName</a>.</p>
+                                                @Html.Raw("------\n")
+                                            }
+                                        </li>
+                                        Roles
+                                        <li>
+                                            @foreach (var role in  @Model.Roles)
+                                        {
+                                            <p class="name_user">@role </p>
+                                            @Html.Raw("------\n")                        
+                                        }
+                                        --
+                                        </li>
+                                        
                                     </div>
                                  </div>
                               </div>

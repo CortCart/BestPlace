@@ -57,7 +57,7 @@ namespace BestPlace.Areas.Admin.Controllers
                 await userManager.AddToRolesAsync(user, model.RoleNames);
             }
 
-            return View("All");
+            return RedirectToAction("All");
         }
 
         public async Task<IActionResult> All()
