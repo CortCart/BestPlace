@@ -90,7 +90,7 @@ public class CategoryService:ICategoryService
 
         {
 
-            model.Image.OpenReadStream().CopyTo(ms);
+            model.Image.OpenReadStream().CopyToAsync(ms);
 
             bytes = ms.ToArray();
 
