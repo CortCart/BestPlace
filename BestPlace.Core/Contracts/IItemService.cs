@@ -13,5 +13,5 @@ public interface IItemService
 
     Task Edit(ItemAddViewModel model);
 
-    Task<bool> DeleteItem(Guid id);
+    Task DeleteItem(Guid id);
 }

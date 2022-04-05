@@ -11,5 +11,5 @@ public interface IUserService
 
     Task<ApplicationUser> GetUserById(string id);
 
-    Task<bool>  DeleteUser(string id);
+    Task  DeleteUser(string id);
 }

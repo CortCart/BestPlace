@@ -16,12 +16,15 @@ public class ImageService:IImageService
     public async Task<byte[]> GetCategoryImage(Guid id)
     {
         var image = await this.repository.GetByIdAsync<Category>(id);
+        if (image == null) throw new ArgumentException("Unknown image");
         return image.Image;
     }
 
     public async Task<byte[]> GetItemImage(Guid id)
     {
         var image = await this.repository.GetByIdAsync<ItemImages>(id);
-        return  image.Source;
+        if (image == null) throw new ArgumentException("Unknown image");
+
+        return image.Source;
     }
 }

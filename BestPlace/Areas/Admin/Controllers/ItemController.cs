@@ -1,5 +1,6 @@
 ﻿using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
@@ -21,22 +22,33 @@ namespace BestPlace.Areas.Admin.Controllers
 
         public async Task<IActionResult> Remove(Guid id)
         {
-            var user = await this.itemService.DeleteItem(id);
-            if (user == false)
+            try
             {
-                ViewData[MessageConstant.SuccessMessage] = "Error while delete item";
+                await this.itemService.DeleteItem(id);
+
+                return RedirectToAction("All");
             }
-            else
+            catch 
             {
-                ViewData[MessageConstant.SuccessMessage] = "Item was deleted";
+                return View("Error", new ErrorViewModel() { name = "Unknown  item" });
+
             }
-            return RedirectToAction("All");
+
         }
 
         public async Task<IActionResult> Details( Guid id)
         {
-            var item = await this.itemService.GetItemDetails(id);
-            return View(item);
+            try
+            {
+                var item = await this.itemService.GetItemDetails(id);
+                return View(item);
+            }
+            catch 
+            {
+                return View("Error", new ErrorViewModel() { name = "Unknown  item" });
+
+            }
+
         }
 
     }

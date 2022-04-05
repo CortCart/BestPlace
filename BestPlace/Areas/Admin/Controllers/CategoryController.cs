@@ -1,6 +1,7 @@
 ﻿using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.Category;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
@@ -33,24 +34,25 @@ namespace BestPlace.Areas.Admin.Controllers
                 return View(model);
             }
 
-            if (await categoryService.AddCategory(model))
-            {
-                ViewData[MessageConstant.SuccessMessage] = "Add category";
+            await categoryService.AddCategory(model);
+            
+                
                 return RedirectToAction("All");
-            }
-            else
-            {
-                ViewData[MessageConstant.ErrorMessage] = "Error while add category";
-            }
-
-            return View(model);
+            
 
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await this.categoryService.GetCategoryForEdit(id);
-            return View(model);
+            try
+            {
+                var model = await this.categoryService.GetCategoryForEdit(id);
+                return View(model);
+            }
+            catch 
+            {
+                return View("Error", new ErrorViewModel() { name = "Unknown  category" });
+            }
         }
 
         [HttpPost]
@@ -61,31 +63,27 @@ namespace BestPlace.Areas.Admin.Controllers
                 return View(model);
             }
 
-            if (await categoryService.EditCategory(model))
-            {
-                ViewData[MessageConstant.SuccessMessage] = "Edit category";
-                return RedirectToAction("All");
-            }
-            else
-            {
-                ViewData[MessageConstant.ErrorMessage] = "Error while edit category";
-            }
+            await categoryService.EditCategory(model);
+          
 
             return View(model);
         }
 
         public async  Task<IActionResult> Remove(Guid id)
         {
-           var category=  await  this.categoryService.DeleteCategory(id);
-           if (category == false)
+          
+          
+           try
            {
-               ViewData[MessageConstant.SuccessMessage] = "Error while delete category";
-           }
-           else
+             await this.categoryService.DeleteCategory(id);
+               return RedirectToAction("All");
+            }
+           catch
            {
-               ViewData[MessageConstant.SuccessMessage] = "Category was deleted";
+               return View("Error", new ErrorViewModel() { name = "Unknown  category" });
            }
-           return RedirectToAction("All");
+
+           
         }
     }
 }

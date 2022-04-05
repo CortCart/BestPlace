@@ -28,7 +28,7 @@ public class CategoryService:ICategoryService
         return categorys;
     }
 
-    public async Task<bool> AddCategory(CategoryAddViewModel model)
+    public async Task AddCategory(CategoryAddViewModel model)
     {
 
         byte[] bytes = null;
@@ -48,22 +48,17 @@ public class CategoryService:ICategoryService
             Name = model.Name,
             Image = bytes,
         };
-        try
-        {
+        
             await this.repository.AddAsync(category);
             await this.repository.SaveChangesAsync();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+       
 
     }
 
     public async Task<CategoryEditViewModel> GetCategoryForEdit(Guid id)
     {
         var category = await this.repository.GetByIdAsync<Category>(id);
+        if (category == null) throw new ArgumentException("Unknown category");
 
         return new CategoryEditViewModel
         {
@@ -73,34 +68,23 @@ public class CategoryService:ICategoryService
 
     }
 
-    public async Task<bool> DeleteCategory(Guid id)
+    public async Task DeleteCategory(Guid id)
     {
         var category = await this.repository.GetByIdAsync<Category>(id);
-        if (category == null)
-        {
-            return false;
-        }
+        if (category == null) throw new ArgumentException("Unknown category");
 
-        try
-        {
+
+       
              this.repository.Delete(category);
             await this.repository.SaveChangesAsync();
-            return true;
-        }
-        catch
-        {
-
-            return false;
-        }
+           
+       
     }
 
-    public async Task<bool> EditCategory(CategoryEditViewModel model)
+    public async Task EditCategory(CategoryEditViewModel model)
     {
         var category = await this.repository.GetByIdAsync<Category>(model.Id);
-        if (category == null)
-        {
-            return false;
-        }
+       
         byte[] bytes = null;
         using (MemoryStream ms = new MemoryStream())
 
@@ -111,17 +95,10 @@ public class CategoryService:ICategoryService
             bytes = ms.ToArray();
 
         }
-        try
-        {
+       
             category.Name = model.Name;
             category.Image =bytes;
             await this.repository.SaveChangesAsync();
-            return true;
-        }
-        catch
-        {
-
-            return false;
-        }
+       
     }
 }

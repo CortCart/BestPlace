@@ -32,6 +32,7 @@ public class DealService:IDealService
     public async Task<DealDetailsViewModel> GetDealDetails(Guid id)
     {
         var model = await this.repository.GetByIdAsync<Deal>(id);
+        if (model == null) throw new ArgumentException("Unknown deal");
 
         return new DealDetailsViewModel()
         {

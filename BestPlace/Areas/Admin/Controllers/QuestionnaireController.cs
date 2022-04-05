@@ -1,6 +1,7 @@
 ﻿using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
 using BestPlace.Core.Models;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
@@ -35,23 +36,24 @@ namespace BestPlace.Areas.Admin.Controllers
                 return View(model);
             }
 
-            if (await this.questionnaireService.AddQuestionnaire(model))
-            {
-                ViewData[MessageConstant.SuccessMessage] = "Add category";
-                return RedirectToAction("All");
-            }
-            else
-            {
-                ViewData[MessageConstant.ErrorMessage] = "Error while add category";
-            }
+         await   this.questionnaireService.AddQuestionnaire(model);
+           
 
             return View(model);
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var questionnaire = await this.questionnaireService.GetQuestionnaireDetails(id);
-            return View(questionnaire);
+            try
+            {
+                var questionnaire = await this.questionnaireService.GetQuestionnaireDetails(id);
+
+                return View(questionnaire);
+            }
+            catch
+            {
+                return View("Error", new ErrorViewModel() { name = "Unknown  questionnaire" });
+            }
         }
     }
 }

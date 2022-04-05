@@ -8,5 +8,5 @@ public interface IQuestionnaireService
 
     Task<QuestionnaireDetailsViewModel> GetQuestionnaireDetails(Guid id);
 
-    Task<bool> AddQuestionnaire(QuestionnaireAddViewModel model);
+    Task AddQuestionnaire(QuestionnaireAddViewModel model);
 }

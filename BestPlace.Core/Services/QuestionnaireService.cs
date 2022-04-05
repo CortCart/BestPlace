@@ -33,26 +33,26 @@ public class QuestionnaireService:IQuestionnaireService
     {
         var questionnaire = await this.repository.GetByIdAsync<Questionnaire>(id);
 
+        if (questionnaire == null) throw new ArgumentException("Unknown  questionnaire");
 
-        return new QuestionnaireDetailsViewModel
-        {
-            Id = questionnaire.Id,
-            Name = questionnaire.Name,
-            Description = questionnaire.Description,
-            Submits = questionnaire.SubmitQuestionnaires.Select(x => new QuestionnaireSubmitViewModel
+        
+            return new QuestionnaireDetailsViewModel
             {
-                Answer = x.Answer,
-                UserId = x.UserId,
-                UserName = $"{x.User.FirstName} {x.User.LastName}"
-            }).ToList()
-        };
+                Id = questionnaire.Id,
+                Name = questionnaire.Name,
+                Description = questionnaire.Description,
+                Submits = questionnaire.SubmitQuestionnaires.Select(x => new QuestionnaireSubmitViewModel
+                {
+                    Answer = x.Answer,
+                    UserId = x.UserId,
+                    UserName = $"{x.User.FirstName} {x.User.LastName}"
+                }).ToList()
+            };
     }
 
-    public async Task<bool> AddQuestionnaire(QuestionnaireAddViewModel model)
+    public async Task AddQuestionnaire(QuestionnaireAddViewModel model)
     {
-       
-       try
-       {
+        
            var questionnaire = new Questionnaire
            {
                Name = model.Name,
@@ -60,12 +60,7 @@ public class QuestionnaireService:IQuestionnaireService
            };
            await this.repository.AddAsync(questionnaire);
            await this.repository.SaveChangesAsync();
-            return true;
-       }
-       catch
-       {
-
-           return false;
-       }
+          
+      
     }
 }

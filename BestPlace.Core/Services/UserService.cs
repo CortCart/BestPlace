@@ -40,7 +40,8 @@ public class UserService:IUserService
     public async Task<UserDetailsViewModel> GetUserDetails(string id)
     {
         var user = await this.GetUserById(id);
-
+        if (user == null) throw new ArgumentException("Unknown  user");
+    
         var dealAsOwner = await this.repository.All<Deal>()
             .Where(x => x.ExOwnerId == id)
             .Select(x => new UserDealAsOwnerViewModel()
@@ -93,40 +94,21 @@ public class UserService:IUserService
     //    };
     //}
 
-    //public async Task<bool> UpdateUser(UserEditViewModel model)
-    //{
-    //    var user = await this.repository.GetByIdAsync<ApplicationUser>(model.Id);
-    //    if (user == null)
-    //    {
-    //        return false;
-    //    }
-    //    user.FirstName = model.FirstName;
-    //    user.LastName= model.LastName;
-    //    user.Email = model.Email;
-    //    user.Address = model.Address;
-    //    user.Phone = model.Phone;
-
-    //  await   this.repository.SaveChangesAsync();
-    //    return true;
-    //}
 
     public async Task<ApplicationUser> GetUserById(string id)
     {
         return await this.repository.GetByIdAsync<ApplicationUser>(id);
     }
 
-    public async Task<bool> DeleteUser(string id)
+    public async Task DeleteUser(string id)
     {
         var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
-        if (user == null)
-        {
-            return false;
-        }
+        if (user == null) throw new ArgumentException("Unknown user");
 
-          this.repository.Delete<ApplicationUser>(user);
+
+        this.repository.Delete<ApplicationUser>(user);
         await  this.repository.SaveChangesAsync();
 
-        return true;
     }
 
 

@@ -1,4 +1,6 @@
 ﻿using BestPlace.Core.Contracts;
+using BestPlace.Infrastructure.Data;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers;
@@ -20,7 +22,16 @@ public class DealController:BaseController
 
     public async  Task<IActionResult> Details(Guid id)
     {
-        var deal = await this.dealService.GetDealDetails(id);
-        return View(deal);
+        try
+        {
+            var deal = await this.dealService.GetDealDetails(id);
+
+
+            return View(deal);
+        }
+        catch
+        {
+            return View("Error", new ErrorViewModel() { name = "Unknown  deal" });
+        }
     }
 }

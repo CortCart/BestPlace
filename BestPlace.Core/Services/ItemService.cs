@@ -36,34 +36,34 @@ public class ItemService : IItemService
 
     public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
     {
-        var item = await this.repository.All<Item>()
-            .Where(x => x.Id == id)
-            .Select(x => new ItemDetailsViewModel
+        var item = await this.repository.GetByIdAsync<Item>(id);
+        if (item == null) throw new ArgumentException("Unknown item");
+
+
+          var itemDetails =  new ItemDetailsViewModel
             {
-                Id = x.Id,
-                Label = x.Label,
-                Description = x.Description,
-                IsBought = x.IsBought,
-                OwnerId = x.OwnerId,
-                OwnerName = $"{x.Owner.FirstName} {x.Owner.LastName}",
-                CategoryId = x.CategoryId,
-                CategoryName = x.Category.Name,
-                Images = x.Images.Select(y=>new ItemImageDetailsViewModel
+                Id = item.Id,
+                Label = item.Label,
+                Description = item.Description,
+                IsBought = item.IsBought,
+                OwnerId = item.OwnerId,
+                OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
+                CategoryId = item.CategoryId,
+                CategoryName = item.Category.Name,
+                Images = item.Images.Select(y=>new ItemImageDetailsViewModel
                 {
                    Id = y.Id,
                    Source = y.Source
                 }).ToList()
-            }).FirstOrDefaultAsync();
-        item.BuyerId = await this.repository.All<Deal>().Where(x=>x.ItemId==item.Id).Select(x=>x.BuyerUserId).FirstOrDefaultAsync();
-        item.BuyerName = await this.repository.All<Deal>().Where(x => x.ItemId == item.Id).Select(x => $"{x.BuyerUser.FirstName} {x.BuyerUser.LastName}").FirstOrDefaultAsync();
-        return item;
+            };
+          itemDetails.BuyerId = await this.repository.All<Deal>().Where(x=>x.ItemId==item.Id).Select(x=>x.BuyerUserId).FirstOrDefaultAsync();
+          itemDetails.BuyerName = await this.repository.All<Deal>().Where(x => x.ItemId == item.Id).Select(x => $"{x.BuyerUser.FirstName} {x.BuyerUser.LastName}").FirstOrDefaultAsync();
+        return itemDetails;
     }
 
     public async Task Add(ItemAddViewModel model , string userId)
     {
-        try
-        {
-            var item = new Item()
+        var item = new Item()
             {
                 Label = model.Label,
                 Description = model.Description,
@@ -99,11 +99,7 @@ public class ItemService : IItemService
             await this.repository.AddAsync(item);
 
             await this.repository.SaveChangesAsync();
-        }
-        catch 
-        {
-           
-        }
+        
     }
 
     public Task Edit(ItemAddViewModel model)
@@ -111,18 +107,13 @@ public class ItemService : IItemService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteItem(Guid id)
+    public async Task DeleteItem(Guid id)
     {
         var item = await this.repository.GetByIdAsync<Item>(id);
-        if (item == null)
-        {
-            return false;
-        }
+        if (item == null) throw new ArgumentException("Unknown item");
 
         this.repository.Delete<Item>(item);
         await this.repository.SaveChangesAsync();
-
-        return true;
     }
 
 }

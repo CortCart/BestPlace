@@ -1,6 +1,7 @@
 ﻿using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.User;
 using BestPlace.Infrastructure.Data.Identity;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -68,24 +69,30 @@ namespace BestPlace.Areas.Admin.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var info = await this.userService.GetUserDetails(id);
-
-            return View(info);
+            try
+            {
+                var info = await this.userService.GetUserDetails(id);
+                return View(info);
+            }
+            catch
+            {
+                return View("Error" , new ErrorViewModel(){name = "Unknown  user" });
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Remove(string id)
         {
-            var user = await this.userService.DeleteUser(id);
-            if (user == false)
+            try
             {
-                ViewData["Message"] = "Error while delete user";
+                await this.userService.DeleteUser(id);
+                return RedirectToAction("All");
             }
-            else
+            catch 
             {
-                ViewData["Message"] = "User was deleted";
+                return View("Error", new ErrorViewModel() { name = "Unknown  user" });
             }
-            return RedirectToAction("All");
+
         }
 
     }
