@@ -1,0 +1,66 @@
+﻿@using BestPlace.Core.Models.Item
+@model ItemQueryViewModel
+@{
+    ViewData["Title"] = "All";
+    var items = (List<SelectListItem>)ViewBag.Categories;
+
+}
+  <section class="clean-block clean-catalog dark">
+            <div class="container">
+            <div class="block-heading"></div>
+                <div class="content">
+                    <form method="get"  asp-action="All" >
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="d-none d-md-block">
+                                <div class="filters">
+                                    <div class="filter-item">
+                                        <h3>Query</h3>
+                                        <div >
+
+                                            <input  asp-route-categoryId="@Model.CategoryId" asp-for="Query"  size="26" type="text" >
+                                         
+                                        </div>
+                                        <div>
+
+                                            <select asp-for="CategoryId" asp-items="@items" class="form-control">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div class="products">
+                                <div class="row g-0">
+
+                                    @foreach (var item in @Model.Items)
+                                    {
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="clean-product-item">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img class="img-fluid d-block mx-auto"
+                                                             src="@Url.Action("GetItemImage", "Image", new {id = @item.Image.Id})"></a>
+                                                </div>
+                                                <div class="product-name"><a href="#">@item.Label</a></div>
+                                                <div class="about">
+                                                    <div class="price">
+                                                        <h3>@item.Price BGN</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </section>

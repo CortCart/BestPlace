@@ -36,10 +36,7 @@ namespace BestPlace.Areas.Admin.Controllers
 
             await categoryService.AddCategory(model);
             
-                
                 return RedirectToAction("All");
-            
-
         }
 
         public async Task<IActionResult> Edit(Guid id)

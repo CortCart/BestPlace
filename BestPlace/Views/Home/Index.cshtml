@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <h4 class="card-title">@category.Name</h4>
                         </div>
-                        <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                        <div><a asp-area="" asp-controller="Item" asp-action="All" asp-route-categoryId="@category.Id" asp-route-query="" class="btn btn-outline-primary btn-sm" type="button">View</a></div>
                     </div>
                 </div>
             }

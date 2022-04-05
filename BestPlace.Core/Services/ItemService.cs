@@ -18,6 +18,43 @@ public class ItemService : IItemService
         this.repository = repository;
     }
 
+    public async Task<ItemQueryViewModel> AllPublic(Guid categoryId, string query)
+    {
+        var items = await this.repository.All<Item>()
+            .Where(x=>x.CategoryId==categoryId)
+            .Where(x=>!x.IsBought)
+            .Select(x => new ItemPublicListViewModel()
+            {
+                Id = x.Id,
+                Label = x.Label,
+               Price = x.Price,
+               Image = x.Images.Select(x=> new ItemImageDetailsViewModel
+               {
+                   Id = x.Id,
+               }).First()
+            }).ToListAsync();
+
+        if (query != null)
+        {
+
+            return  new ItemQueryViewModel
+          {
+              CategoryId = categoryId,
+              Query = query,
+              Items = items.Where(x => x.Label.ToLower().Contains(query.ToLower()))
+        };
+
+         
+        }
+
+        return  new ItemQueryViewModel
+        {
+            CategoryId = categoryId,
+            Query = query,
+            Items = items
+        };
+    }
+
     public async Task<IEnumerable<ItemListViewModel>> All()
     {
         var  items = await  this.repository.All<Item>()
@@ -53,7 +90,6 @@ public class ItemService : IItemService
                 Images = item.Images.Select(y=>new ItemImageDetailsViewModel
                 {
                    Id = y.Id,
-                   Source = y.Source
                 }).ToList()
             };
           itemDetails.BuyerId = await this.repository.All<Deal>().Where(x=>x.ItemId==item.Id).Select(x=>x.BuyerUserId).FirstOrDefaultAsync();

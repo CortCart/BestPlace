@@ -24,6 +24,22 @@ namespace BestPlace.Controllers
 
         }
 
+        public async Task<IActionResult> All(Guid categoryId, string query)
+        {
+            var items = await this.itemService.AllPublic(categoryId,  query);
+            var categories = await this.categoryService.All();
+
+            var categoriesForView = categories
+                .Select(r => new SelectListItem()
+                {
+                    Text = r.Name,
+                    Value = r.Id.ToString(),
+                 //   Selected = categoryId
+                }).ToList();
+            ViewBag.Categories = categoriesForView;
+            return View(items);
+        }
+
         public async  Task<IActionResult> Add()
         {
             var categories = await this.categoryService.All();
@@ -32,7 +48,7 @@ namespace BestPlace.Controllers
                 .Select(r => new SelectListItem()
               {
                   Text = r.Name,
-                  Value = r.Id.ToString(),
+                  Value = r.Id.ToString()
               }).ToList();
             ViewBag.Categories= categoriesForView;
             return View();

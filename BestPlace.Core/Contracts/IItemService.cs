@@ -5,6 +5,8 @@ namespace BestPlace.Core.Contracts;
 
 public interface IItemService
 {
+    Task<ItemQueryViewModel> AllPublic(Guid categoryId, string query);
+
     Task<IEnumerable<ItemListViewModel>> All();
 
     Task<ItemDetailsViewModel> GetItemDetails(Guid id);
