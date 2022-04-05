@@ -36,7 +36,7 @@ public class ItemService : IItemService
 
     public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
     {
-        var item = await this.repository.GetByIdAsync<Item>(id);
+        var item = await this.repository.All<Item>().Include(x=>x.Owner ).Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id==id);
         if (item == null) throw new ArgumentException("Unknown item");
 
 
@@ -64,13 +64,23 @@ public class ItemService : IItemService
     public async Task Add(ItemAddViewModel model , string userId)
     {
         var item = new Item()
-            {
-                Label = model.Label,
-                Description = model.Description,
-                CategoryId = Guid.Parse(model.Category),
-                Price = model.Price,
-                OwnerId = userId,
-            };
+        {
+            Label = model.Label,
+            Description = model.Description,
+            Price = model.Price,
+            CategoryId = Guid.Parse(model.Category),
+            OwnerId = userId
+        };
+
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+       var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.Category));
+
+       user.MyItems.Add(item);
+       category.Items.Add(item);
+
+       item.Owner = user;
+       item.Category = category;
+
             var images = new List<ItemImages>();
             foreach (var image in model.Images  )
             {
@@ -78,7 +88,7 @@ public class ItemService : IItemService
                 using (MemoryStream ms = new MemoryStream())
                 {
 
-                    image.OpenReadStream().CopyTo(ms);
+                  await  image.OpenReadStream().CopyToAsync(ms);
 
                     bytes = ms.ToArray();
 
@@ -96,10 +106,10 @@ public class ItemService : IItemService
             }
 
 
-            await this.repository.AddAsync(item);
+          await   this.repository.AddAsync(item);
 
-            await this.repository.SaveChangesAsync();
-        
+        await     this.repository.SaveChangesAsync();
+            
     }
 
     public Task Edit(ItemAddViewModel model)
