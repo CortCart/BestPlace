@@ -23,41 +23,19 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .WithMany(x => x.MyItems);
 
 
-        builder.Entity<Deal>().HasKey(x => x.Id);
-
-        builder.Entity<Deal>().HasOne(x => x.BuyerUser)
-            .WithMany(d => d.DealsAsBuyer)
-            .HasForeignKey(x => x.BuyerUserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            ;
-
-        builder.Entity<Deal>().HasOne(x=>x.Delivery)
-            .WithMany()
-            .HasForeignKey(x=>x.DeliveryId)
-            .OnDelete(DeleteBehavior.Restrict)
-           ;
-
-        builder.Entity<Deal>().HasOne(x => x.Item)
-            .WithMany()
+        builder.Entity<ItemImages>()
+            .HasOne(x => x.Item)
+            .WithMany(h => h.Images)
             .HasForeignKey(x => x.ItemId)
             .OnDelete(DeleteBehavior.Restrict)
-            ;
-
-        builder.Entity<Deal>().HasOne(x=>x.ExOwner)
-            .WithMany(c=>c.DealsAsOwner)
-            .HasForeignKey(x=>x.ExOwnerId)
-            .OnDelete(DeleteBehavior.Restrict)
-            ;
-
+            .OnDelete(DeleteBehavior.NoAction);
 
         base.OnModelCreating(builder);
     }
 
     public DbSet<Category> Categories { get; set; }
 
-    public DbSet<Deal> Deals { get; set; }
-
-    public DbSet<Delivery> Deliveries { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     public DbSet<Questionnaire> Questionnaires { get; set; }
 
@@ -65,5 +43,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Item> Items { get; set; }
 
-    public DbSet<ItemImages> ItemImages { get; set; }
+    public DbSet<ItemImages> ItemsImages { get; set; }
+
+
 }

@@ -14,7 +14,7 @@ public class ItemAddViewModel
     public string Label { get; set; }
 
     [MaxLength(500)]
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     [Column(TypeName = "decimal(18,2)")]
     [Range((typeof(decimal)), "0", "79228162514264337593543950335")]
@@ -22,7 +22,7 @@ public class ItemAddViewModel
     public decimal Price { get; set; }
 
     [Required]
-    public string Category { get; set; }
+    public string CategoryId { get; set; }
 
     [MinLength(1, ErrorMessage = "The field Images must have at least 1 image")]
     public ICollection<IFormFile> Images { get; set; } = new List<IFormFile>();

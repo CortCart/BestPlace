@@ -13,7 +13,11 @@ public class Category
     [MaxLength(50)]
     public string Name { get; set; }
 
-    public byte[] Image { get; set; }
+    [Required]
+    public Guid ImageId { get; set; }
+
+    [ForeignKey(nameof(ImageId))]
+    public Image Image { get; set; }
 
     public ICollection<Item> Items { get; set; } = new List<Item>();
 }

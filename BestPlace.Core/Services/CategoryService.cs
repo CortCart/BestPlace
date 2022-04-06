@@ -22,7 +22,7 @@ public class CategoryService:ICategoryService
             {
                 Id = x.Id,
                 Name = x.Name,
-                Source = x.Image
+                Source = x.Image.Source
             }).ToListAsync();
 
         return categorys;
@@ -41,15 +41,20 @@ public class CategoryService:ICategoryService
             bytes = ms.ToArray();
 
         }
+        var img = new Image()
+        {
+            Source = bytes
+        };
 
-        
         var category = new Category
         {
             Name = model.Name,
-            Image = bytes,
+            ImageId = img.Id,
+            Image = img
         };
-        
-            await this.repository.AddAsync(category);
+        await this.repository.AddAsync(img);
+
+        await this.repository.AddAsync(category);
             await this.repository.SaveChangesAsync();
        
 
@@ -90,14 +95,14 @@ public class CategoryService:ICategoryService
 
         {
 
-            model.Image.OpenReadStream().CopyToAsync(ms);
+          await  model.Image.OpenReadStream().CopyToAsync(ms);
 
             bytes = ms.ToArray();
 
         }
        
             category.Name = model.Name;
-            category.Image =bytes;
+            category.Image.Source =bytes;
             await this.repository.SaveChangesAsync();
        
     }

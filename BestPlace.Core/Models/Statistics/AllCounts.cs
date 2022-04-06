@@ -12,6 +12,6 @@ namespace BestPlace.Core.Models.Statistics
 
         public int ItemsCount { get; set; }
 
-        public int DealsCount { get; set; }
+       
     }
 }

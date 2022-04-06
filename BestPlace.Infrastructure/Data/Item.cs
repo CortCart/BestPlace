@@ -14,10 +14,10 @@ public class Item
     public string Label { get; set; }
 
     [MaxLength(500)]
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     [Column(TypeName = "decimal(18,2)")]
-    [Range((typeof(decimal)), "0" , "79228162514264337593543950335")]
+    [Range((typeof(decimal)), "0", "79228162514264337593543950335")]
     [Required]
     public decimal Price { get; set; }
 
@@ -29,7 +29,6 @@ public class Item
     [ForeignKey(nameof(OwnerId))]
     public ApplicationUser Owner { get; set; }
 
-    public bool IsBought { get; set; } = false;
 
 
     [Required]

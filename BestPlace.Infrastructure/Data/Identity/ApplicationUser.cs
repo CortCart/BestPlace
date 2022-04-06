@@ -5,18 +5,22 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BestPlace.Infrastructure.Data.Identity;
 
-public class ApplicationUser:IdentityUser
+public class ApplicationUser : IdentityUser
 {
 
     [StringLength(50)]
     public string FirstName { get; set; }
 
-    [AllowNull]
-    public byte[] Image { get; set; }
-
 
     [StringLength(50)]
     public string LastName { get; set; }
+
+
+    public Guid? ImageId { get; set; }
+
+    [ForeignKey(nameof(ImageId))]
+    public Image? Image { get; set; }
+
 
     [Required]
     [MaxLength(250)]
@@ -28,8 +32,5 @@ public class ApplicationUser:IdentityUser
 
     public ICollection<Item> MyItems { get; set; } = new List<Item>();
 
-    public ICollection<Deal> DealsAsOwner { get; set; } = new List<Deal>();
-
-    public ICollection<Deal> DealsAsBuyer{ get; set; } = new List<Deal>();
-
+  
 }

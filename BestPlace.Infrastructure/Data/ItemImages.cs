@@ -8,7 +8,11 @@ public class ItemImages
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
-    public byte[] Source { get; set; }
+    [Required]
+    public Guid ImageId { get; set; }
+
+    [ForeignKey(nameof(ImageId))]
+    public Image Image { get; set; }
 
     [Required]
     public Guid ItemId { get; set; }

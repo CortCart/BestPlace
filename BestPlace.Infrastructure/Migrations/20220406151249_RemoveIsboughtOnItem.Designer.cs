@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestPlace.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220331070548_ChangeExOwnerToOwnerInIteam")]
-    partial class ChangeExOwnerToOwnerInIteam
+    [Migration("20220406151249_RemoveIsboughtOnItem")]
+    partial class RemoveIsboughtOnItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,9 +30,8 @@ namespace BestPlace.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -41,61 +40,9 @@ namespace BestPlace.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageId");
+
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.Deal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BuyerUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("DeliveryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ExOwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BuyerUserId");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.HasIndex("ExOwnerId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("Deals");
-                });
-
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.Delivery", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Addres")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Deliveries");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Identity.ApplicationUser", b =>
@@ -127,9 +74,8 @@ namespace BestPlace.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<Guid?>("ImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -175,6 +121,8 @@ namespace BestPlace.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ImageId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -184,6 +132,21 @@ namespace BestPlace.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BestPlace.Infrastructure.Data.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Source")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Item", b =>
@@ -196,11 +159,9 @@ namespace BestPlace.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsBought")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -232,18 +193,19 @@ namespace BestPlace.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Source")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemImages");
+                    b.ToTable("ItemsImages");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Questionnaire", b =>
@@ -431,39 +393,24 @@ namespace BestPlace.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BestPlace.Infrastructure.Data.Deal", b =>
+            modelBuilder.Entity("BestPlace.Infrastructure.Data.Category", b =>
                 {
-                    b.HasOne("BestPlace.Infrastructure.Data.Identity.ApplicationUser", "BuyerUser")
-                        .WithMany("DealsAsBuyer")
-                        .HasForeignKey("BuyerUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BestPlace.Infrastructure.Data.Delivery", "Delivery")
+                    b.HasOne("BestPlace.Infrastructure.Data.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BestPlace.Infrastructure.Data.Identity.ApplicationUser", "ExOwner")
-                        .WithMany("DealsAsOwner")
-                        .HasForeignKey("ExOwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Image");
+                });
 
-                    b.HasOne("BestPlace.Infrastructure.Data.Item", "Item")
+            modelBuilder.Entity("BestPlace.Infrastructure.Data.Identity.ApplicationUser", b =>
+                {
+                    b.HasOne("BestPlace.Infrastructure.Data.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
-                    b.Navigation("BuyerUser");
-
-                    b.Navigation("Delivery");
-
-                    b.Navigation("ExOwner");
-
-                    b.Navigation("Item");
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Item", b =>
@@ -487,11 +434,19 @@ namespace BestPlace.Infrastructure.Migrations
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.ItemImages", b =>
                 {
+                    b.HasOne("BestPlace.Infrastructure.Data.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BestPlace.Infrastructure.Data.Item", "Item")
                         .WithMany("Images")
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Image");
 
                     b.Navigation("Item");
                 });
@@ -573,10 +528,6 @@ namespace BestPlace.Infrastructure.Migrations
 
             modelBuilder.Entity("BestPlace.Infrastructure.Data.Identity.ApplicationUser", b =>
                 {
-                    b.Navigation("DealsAsBuyer");
-
-                    b.Navigation("DealsAsOwner");
-
                     b.Navigation("MyItems");
                 });
 

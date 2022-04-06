@@ -81,7 +81,16 @@ namespace BestPlace.Controllers
                         ModelState.AddModelError(string.Empty, error.ErrorMessage);
                     }
 
-                    var item = await this.itemService.GetItemForEdit(model.Id, this.userManager.GetUserId(User));
+                    try
+                    {
+                        var item = await this.itemService.GetItemForEdit(model.Id, this.userManager.GetUserId(User));
+
+                    }
+                    catch
+                    {
+                        return View("Error", new ErrorViewModel() {name = "Unknown  item"});
+
+                    }
                 }
                 var categoriesForView = categories
                     .Select(r => new SelectListItem()
@@ -133,14 +142,27 @@ namespace BestPlace.Controllers
 
             await this.itemService.Add(model, this.userManager.GetUserId(User));
 
-            return RedirectToAction("All");
+            return RedirectToAction("All", new
+            {
+                 categoryId= model.CategoryId,
+                 query = ""
+            });
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var item = await this.itemService.GetItemDetails(id, this.userManager.GetUserId(User));
 
-            return View(item);
+            try
+            {
+                var item = await this.itemService.GetItemDetails(id, this.userManager.GetUserId(User));
+                return View(item);
+            }
+            catch
+            {
+                return View("Error", new ErrorViewModel() { name = "Unknown  item" });
+
+            }
+          
         }
     }
 }

@@ -9,7 +9,7 @@
 <section class="clean-block clean-form dark">
     <div class="container">
         <div class="block-heading">
-            <h2 class="text-info">Add item</ h2>
+            <h2 class="text-info">Add item</h2>
         </div>
         <form enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,7 +33,7 @@
             <div class="mb-3">
                 <label  class="form-label">Select category</label>
 
-                <select asp-for="Category" asp-items="@items" class="form-control">
+                <select asp-for="CategoryId" asp-items="@items" class="form-control">
 
                 </select>
             </div>

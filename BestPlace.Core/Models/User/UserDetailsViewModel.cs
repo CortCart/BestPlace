@@ -8,30 +8,28 @@ public class UserDetailsViewModel
 
     [Required]
     [Display(Name = "First name")]
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; }
 
     [Required]
     [Display(Name = "Last name")]
-    public string? LastName { get; set; }
+    public string LastName { get; set; }
 
     [Required]
     [EmailAddress]
     [Display(Name = "Email")]
-    public string? Email { get; set; }
+    public string Email { get; set; }
 
     [Required]
     [MaxLength(250)]
     [Display(Name = "Address")]
-    public string? Address { get; set; }
+    public string Address { get; set; }
 
     [Required]
     [RegularExpression("[+]{1}359 [0-9]{3} [0-9]{4}")]
     [Display(Name = "Phone")]
-    public string? Phone { get; set; }
+    public string Phone { get; set; }
 
-    public ICollection<UserDealAsBuyerViewModel> DealsAsBuyer { get; set; } = new List<UserDealAsBuyerViewModel>();
 
     public ICollection<string> Roles { get; set; } = new List<string>();
 
-    public ICollection<UserDealAsOwnerViewModel> DealsAsOwner { get; set; } = new List<UserDealAsOwnerViewModel>();
 }

@@ -133,7 +133,7 @@ namespace BestPlace.Areas.Identity.Pages.Account
                 user.Email = Input.Email;
                 user.Address = Input.Address;
                 user.Phone = Input.Phone;
-                user.Image = Array.Empty<byte>();
+                //user.Image = Array.Empty<byte>();
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

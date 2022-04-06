@@ -22,7 +22,6 @@ public class ItemService : IItemService
     {
         var items = await this.repository.All<Item>()
             .Where(x => x.CategoryId == categoryId)
-            .Where(x => !x.IsBought)
             .Select(x => new ItemPublicListViewModel()
             {
                 Id = x.Id,
@@ -120,17 +119,21 @@ public class ItemService : IItemService
 
             }
 
+            var img = new Image()
+            {
+                Source = bytes
+            };
 
             var itemImage = new ItemImages()
 
             {
                 ItemId = item.Id,
-                Source = bytes
+                ImageId = img.Id
             };
 
             item.Images.Add(itemImage);
             await this.repository.AddAsync(itemImage);
-            await this.repository.AddAsync(itemImage);
+            await this.repository.AddAsync(img);
         }
 
 
@@ -155,7 +158,6 @@ public class ItemService : IItemService
             Id = item.Id,
             Label = item.Label,
             Description = item.Description,
-            IsBought = item.IsBought,
             Likes = item.Likes,
             Price = item.Price,
             OwnerId = item.OwnerId,
@@ -180,8 +182,7 @@ public class ItemService : IItemService
         {
             Id = item.Id,
             Label = item.Label,
-            Description = item.Description,
-            IsBought = item.IsBought,
+            Description = item.Description, 
             Likes = item.Likes,
             Price = item.Price,
             OwnerId = item.OwnerId,
@@ -204,12 +205,12 @@ public class ItemService : IItemService
             Label = model.Label,
             Description = model.Description,
             Price = model.Price,
-            CategoryId = Guid.Parse(model.Category),
+            CategoryId = Guid.Parse(model.CategoryId),
             OwnerId = userId
         };
 
         var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
-        var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.Category));
+        var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.CategoryId));
 
         user.MyItems.Add(item);
         category.Items.Add(item);
@@ -217,7 +218,7 @@ public class ItemService : IItemService
         item.Owner = user;
         item.Category = category;
 
-        var images = new List<ItemImage>();
+        var images = new List<ItemImages>();
         foreach (var image in model.Images)
         {
             byte[] bytes = null;
@@ -234,7 +235,7 @@ public class ItemService : IItemService
             {
                 Source = bytes
             };
-            var itemImage = new ItemImage()
+            var itemImage = new ItemImages()
 
             {
                 ItemId = item.Id,

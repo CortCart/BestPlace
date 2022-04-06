@@ -42,27 +42,7 @@ public class UserService:IUserService
         var user = await this.GetUserById(id);
         if (user == null) throw new ArgumentException("Unknown  user");
     
-        var dealAsOwner = await this.repository.All<Deal>()
-            .Where(x => x.ExOwnerId == id)
-            .Select(x => new UserDealAsOwnerViewModel()
-            {
-                BuyerId = x.BuyerUserId,
-                BuyerName = $"{x.BuyerUser.FirstName} {x.BuyerUser.LastName}",
-                ItemId = x.ItemId,
-                ItemName = x.Item.Label
-            })
-            .ToListAsync();
-
-        var dealAsBuyer = await this.repository.All<Deal>()
-            .Where(x => x.ExOwnerId == id)
-            .Select(x => new UserDealAsBuyerViewModel()
-            {
-                ExOwnerId = x.ExOwnerId,
-                ExOwnerName = $"{x.ExOwner.FirstName} {x.ExOwner.LastName}",
-                ItemId = x.ItemId,
-                ItemName = x.Item.Label
-            })
-            .ToListAsync();
+      
 
         var userRoles = await userManager.GetRolesAsync(user);
 
@@ -74,8 +54,6 @@ public class UserService:IUserService
             Email = user.Email,
             Address = user.Address,
             Phone = user.Phone,
-            DealsAsBuyer = dealAsBuyer,
-            DealsAsOwner = dealAsOwner,
             Roles = userRoles
         };
     }
