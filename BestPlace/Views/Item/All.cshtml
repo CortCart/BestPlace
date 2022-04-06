@@ -39,14 +39,14 @@
 
                                     @foreach (var item in @Model.Items)
                                     {
-                                        <div class="col-12 col-md-6 col-lg-4">
+                                        <div  class="col-12 col-md-6 col-lg-4">
                                             <div class="clean-product-item">
                                                 <div class="image">
                                                     <a href="#">
                                                         <img class="img-fluid d-block mx-auto"
-                                                             src="@Url.Action("GetItemImage", "Image", new {id = @item.Image.Id})"></a>
+                                                             src="@Url.Action("GetItemImage", "Image", new {id = @item.Image.Id.ToString()})"></a>
                                                 </div>
-                                                <div class="product-name"><a href="#">@item.Label</a></div>
+                                                <div class="product-name"><a asp-controller="Item" asp-action="Details" asp-route-id="@item.Id">@item.Label</a></div>
                                                 <div class="about">
                                                     <div class="price">
                                                         <h3>@item.Price BGN</h3>

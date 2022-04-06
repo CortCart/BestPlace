@@ -74,5 +74,12 @@ namespace BestPlace.Controllers
 
             return RedirectToAction("All");
         }
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var item = await this.itemService.GetItemDetails(id);
+            
+            return View(item);
+        }
     }
 }

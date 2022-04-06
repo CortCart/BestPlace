@@ -73,7 +73,7 @@ public class ItemService : IItemService
 
     public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
     {
-        var item = await this.repository.All<Item>().Include(x=>x.Owner ).Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id==id);
+        var item = await this.repository.All<Item>().Include(x=>x.Images).Include(x=>x.Owner ).Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id==id);
         if (item == null) throw new ArgumentException("Unknown item");
 
 
@@ -83,6 +83,8 @@ public class ItemService : IItemService
                 Label = item.Label,
                 Description = item.Description,
                 IsBought = item.IsBought,
+                Likes = item.Likes,
+                Price = item.Price,
                 OwnerId = item.OwnerId,
                 OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
                 CategoryId = item.CategoryId,

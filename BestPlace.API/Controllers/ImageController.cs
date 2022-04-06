@@ -15,11 +15,11 @@ namespace BestPlace.Api.Controllers
         }
 
         [HttpGet("GetCategoryImage/{id}")]
-        public async Task<IActionResult> GetCategoryImage(Guid id)
+        public async Task<IActionResult> GetCategoryImage(string id)
         {
             try
             {
-                var binary = await this.imageService.GetCategoryImage(id);
+                var binary = await this.imageService.GetCategoryImage(Guid.Parse(id));
 
                 return File(binary, "image/png");
             }
@@ -32,11 +32,12 @@ namespace BestPlace.Api.Controllers
         }
 
         [HttpGet("GetItemImage/{id}")]
-        public async Task<IActionResult> GetItemImage(Guid id)
+        public async Task<IActionResult> GetItemImage(string id)
         {
             try
             {
-                var binary = await this.imageService.GetItemImage(id);
+                
+                var binary = await this.imageService.GetItemImage(Guid.Parse(id));
 
                 return File(binary, "image/png");
             }
