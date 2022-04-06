@@ -6,4 +6,5 @@ public interface IImageService
 
     Task<byte[]> GetItemImage(Guid id);
 
+    Task DeleteItemImage(Guid id);
 }

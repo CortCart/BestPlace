@@ -8,6 +8,6 @@ public class ItemPublicListViewModel
 
     public decimal Price { get; set; }
 
-    public ItemImageDetailsViewModel Image { get; set; } 
+    public ItemImageDetailsViewModel Image { get; set; }
 
 }

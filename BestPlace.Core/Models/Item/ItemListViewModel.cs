@@ -4,7 +4,7 @@ namespace BestPlace.Core.Models.Item;
 
 public class ItemListViewModel
 {
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
 
     public string Label { get; set; }
 

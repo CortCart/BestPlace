@@ -21,33 +21,33 @@ public class ItemService : IItemService
     public async Task<ItemQueryViewModel> AllPublic(Guid categoryId, string query)
     {
         var items = await this.repository.All<Item>()
-            .Where(x=>x.CategoryId==categoryId)
-            .Where(x=>!x.IsBought)
+            .Where(x => x.CategoryId == categoryId)
+            .Where(x => !x.IsBought)
             .Select(x => new ItemPublicListViewModel()
             {
                 Id = x.Id,
                 Label = x.Label,
-               Price = x.Price,
-               Image = x.Images.Select(x=> new ItemImageDetailsViewModel
-               {
-                   Id = x.Id,
-               }).First()
+                Price = x.Price,
+                Image = x.Images.Select(x => new ItemImageDetailsViewModel
+                {
+                    Id = x.Id,
+                }).First()
             }).ToListAsync();
 
         if (query != null)
         {
 
-            return  new ItemQueryViewModel
-          {
-              CategoryId = categoryId,
-              Query = query,
-              Items = items.Where(x => x.Label.ToLower().Contains(query.ToLower()))
-        };
+            return new ItemQueryViewModel
+            {
+                CategoryId = categoryId,
+                Query = query,
+                Items = items.Where(x => x.Label.ToLower().Contains(query.ToLower()))
+            };
 
-         
+
         }
 
-        return  new ItemQueryViewModel
+        return new ItemQueryViewModel
         {
             CategoryId = categoryId,
             Query = query,
@@ -57,49 +57,147 @@ public class ItemService : IItemService
 
     public async Task<IEnumerable<ItemListViewModel>> All()
     {
-        var  items = await  this.repository.All<Item>()
-            .Select(x=>new ItemListViewModel
+        var items = await this.repository.All<Item>()
+            .Select(x => new ItemListViewModel
             {
-              Id  = x.Id,
-              Label = x.Label,
-              Likes = x.Likes,
-              CategoryId = x.CategoryId,
-              CategoryName = x.Category.Name,
-              OwnerId = x.OwnerId,
-              Owner = $"{x.Owner.FirstName} {x.Owner.LastName}"
+                Id = x.Id,
+                Label = x.Label,
+                Likes = x.Likes,
+                CategoryId = x.CategoryId,
+                CategoryName = x.Category.Name,
+                OwnerId = x.OwnerId,
+                Owner = $"{x.Owner.FirstName} {x.Owner.LastName}"
             }).ToListAsync();
-      return items; 
+        return items;
     }
 
-    public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
+    public Task<ItemDetailsViewModel> GetItemDetails(Guid id)
     {
-        var item = await this.repository.All<Item>().Include(x=>x.Images).Include(x=>x.Owner ).Include(x=>x.Category).FirstOrDefaultAsync(x=>x.Id==id);
-        if (item == null) throw new ArgumentException("Unknown item");
+        throw new NotImplementedException();
+    }
 
+    public async Task IsMine(Guid id, string userId)
+    {
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+        if (user == null) throw new ArgumentException("Unknow user");
+        var item = user.MyItems.Any(x => x.Id == id);
+        if (item == false) throw new ArgumentException("This is not your item");
+    }
 
-          var itemDetails =  new ItemDetailsViewModel
+    public async Task<ItemEditViewModel> GetItemForEdit(Guid id, string userId)
+    {
+        var item = await this.repository.All<Item>().Include(x => x.Category).Include(x => x.Owner).Include(x => x.Images).FirstOrDefaultAsync(x => x.Id == id);
+        if (item == null) throw new ArgumentException("Unknow item");
+        await IsMine(id, userId);
+
+        var itemForEdit = new ItemEditViewModel()
+        {
+            Id = item.Id,
+            Label = item.Label,
+            Description = item.Description,
+            CategoryId = item.CategoryId.ToString(),
+            Price = item.Price,
+        };
+
+        itemForEdit.ViewImage = item.Images.Select(x => new ItemImageDetailsViewModel() { Id = x.Id }).ToList();
+        return itemForEdit;
+    }
+
+    public async Task Edit(ItemEditViewModel model, string userId)
+    {
+        var item = await this.repository.GetByIdAsync<Item>(model.Id);
+        if (item == null) throw new ArgumentException("Unknow item");
+        await IsMine(model.Id, userId);
+        foreach (var image in model.Images)
+        {
+            byte[] bytes = null;
+            using (MemoryStream ms = new MemoryStream())
             {
-                Id = item.Id,
-                Label = item.Label,
-                Description = item.Description,
-                IsBought = item.IsBought,
-                Likes = item.Likes,
-                Price = item.Price,
-                OwnerId = item.OwnerId,
-                OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
-                CategoryId = item.CategoryId,
-                CategoryName = item.Category.Name,
-                Images = item.Images.Select(y=>new ItemImageDetailsViewModel
-                {
-                   Id = y.Id,
-                }).ToList()
+
+                await image.OpenReadStream().CopyToAsync(ms);
+
+                bytes = ms.ToArray();
+
+            }
+
+
+            var itemImage = new ItemImages()
+
+            {
+                ItemId = item.Id,
+                Source = bytes
             };
-          itemDetails.BuyerId = await this.repository.All<Deal>().Where(x=>x.ItemId==item.Id).Select(x=>x.BuyerUserId).FirstOrDefaultAsync();
-          itemDetails.BuyerName = await this.repository.All<Deal>().Where(x => x.ItemId == item.Id).Select(x => $"{x.BuyerUser.FirstName} {x.BuyerUser.LastName}").FirstOrDefaultAsync();
+
+            item.Images.Add(itemImage);
+            await this.repository.AddAsync(itemImage);
+            await this.repository.AddAsync(itemImage);
+        }
+
+
+
+        item.Label = model.Label;
+        item.Description = model.Description;
+        item.Price = model.Price;
+        item.CategoryId = Guid.Parse(model.CategoryId);
+        await this.repository.SaveChangesAsync();
+    }
+
+
+    public async Task<ItemDetailsViewModel> GetItemDetails(Guid id, string userId)
+    {
+        var item = await this.repository.All<Item>().Include(x => x.Images).Include(x => x.Owner).Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+        if (item == null) throw new ArgumentException("Unknown item");
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+        if (user == null) throw new ArgumentException("Unknow user");
+
+        var itemDetails = new ItemDetailsViewModel
+        {
+            Id = item.Id,
+            Label = item.Label,
+            Description = item.Description,
+            IsBought = item.IsBought,
+            Likes = item.Likes,
+            Price = item.Price,
+            OwnerId = item.OwnerId,
+            OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
+            CategoryId = item.CategoryId,
+            CategoryName = item.Category.Name,
+            IsMine = item.OwnerId == userId,
+            Images = item.Images.Select(y => new ItemImageDetailsViewModel
+            {
+                Id = y.Id,
+            }).ToList()
+        };
         return itemDetails;
     }
 
-    public async Task Add(ItemAddViewModel model , string userId)
+    public async Task<ItemDetailsViewModel> GetItemDetailsAsAdmin(Guid id)
+    {
+        var item = await this.repository.All<Item>().Include(x => x.Images).Include(x => x.Owner).Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+        if (item == null) throw new ArgumentException("Unknown item");
+
+        var itemDetails = new ItemDetailsViewModel
+        {
+            Id = item.Id,
+            Label = item.Label,
+            Description = item.Description,
+            IsBought = item.IsBought,
+            Likes = item.Likes,
+            Price = item.Price,
+            OwnerId = item.OwnerId,
+            OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
+            CategoryId = item.CategoryId,
+            CategoryName = item.Category.Name,
+
+            Images = item.Images.Select(y => new ItemImageDetailsViewModel
+            {
+                Id = y.Id,
+            }).ToList()
+        };
+        return itemDetails;
+    }
+
+    public async Task Add(ItemAddViewModel model, string userId)
     {
         var item = new Item()
         {
@@ -111,49 +209,52 @@ public class ItemService : IItemService
         };
 
         var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
-       var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.Category));
+        var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.Category));
 
-       user.MyItems.Add(item);
-       category.Items.Add(item);
+        user.MyItems.Add(item);
+        category.Items.Add(item);
 
-       item.Owner = user;
-       item.Category = category;
+        item.Owner = user;
+        item.Category = category;
 
-            var images = new List<ItemImages>();
-            foreach (var image in model.Images  )
+        var images = new List<ItemImage>();
+        foreach (var image in model.Images)
+        {
+            byte[] bytes = null;
+            using (MemoryStream ms = new MemoryStream())
             {
-                byte[] bytes = null;
-                using (MemoryStream ms = new MemoryStream())
-                {
 
-                  await  image.OpenReadStream().CopyToAsync(ms);
+                await image.OpenReadStream().CopyToAsync(ms);
 
-                    bytes = ms.ToArray();
-
-                }
-
-                var  img = new ItemImages()
-                {
-                    ItemId = item.Id,
-                    Source = bytes
-                };
-
-                images.Add(img);
-                await this.repository.AddAsync(img);
+                bytes = ms.ToArray();
 
             }
 
+            var img = new Image
+            {
+                Source = bytes
+            };
+            var itemImage = new ItemImage()
 
-          await   this.repository.AddAsync(item);
+            {
+                ItemId = item.Id,
+                ImageId = img.Id
+            };
 
-        await     this.repository.SaveChangesAsync();
-            
+            images.Add(itemImage);
+            await this.repository.AddAsync(img);
+            await this.repository.AddAsync(itemImage);
+
+        }
+
+
+        await this.repository.AddAsync(item);
+
+        await this.repository.SaveChangesAsync();
+
     }
 
-    public Task Edit(ItemAddViewModel model)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public async Task DeleteItem(Guid id)
     {

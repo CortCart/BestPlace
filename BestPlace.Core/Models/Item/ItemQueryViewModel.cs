@@ -6,5 +6,5 @@ public class ItemQueryViewModel
 
     public string Query { get; set; }
 
-    public IEnumerable<ItemPublicListViewModel> Items { get; set; } =new List<ItemPublicListViewModel>();
+    public IEnumerable<ItemPublicListViewModel> Items { get; set; } = new List<ItemPublicListViewModel>();
 }

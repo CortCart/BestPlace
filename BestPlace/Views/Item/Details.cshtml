@@ -29,7 +29,13 @@
                             <h3>@Model.Label</h3>
                             <div class="price">
                                 <h3>@Model.Price BGN</h3>
-                            </div><button class="btn btn-primary" type="button"><i class="icon-basket"></i>Info for contact</button>
+                            </div>
+                            <button class="btn btn-primary" type="button"><i class="icon-basket"></i>Info for contact</button>
+                           @if (@Model.IsMine)
+                           {
+                               <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id"  class="btn btn-primary" ><i ></i>Edit</a>
+
+                           }
                             <div class="summary">
                                 <p>@Model.Description
                                 </p>
@@ -41,4 +47,4 @@
         </div>
     </div>
 </section>
-<script src="~/js/details.js"></script>
+<script src="~/js/imageScript.js"></script>

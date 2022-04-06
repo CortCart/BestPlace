@@ -10,8 +10,8 @@ namespace BestPlace.Api.Controllers
         private readonly IImageService imageService;
 
         public ImageController(IImageService imageService)
-        { 
-          this.imageService = imageService;
+        {
+            this.imageService = imageService;
         }
 
         [HttpGet("GetCategoryImage/{id}")]
@@ -28,7 +28,7 @@ namespace BestPlace.Api.Controllers
                 return BadRequest();
             }
 
-           
+
         }
 
         [HttpGet("GetItemImage/{id}")]
@@ -36,10 +36,26 @@ namespace BestPlace.Api.Controllers
         {
             try
             {
-                
+
                 var binary = await this.imageService.GetItemImage(Guid.Parse(id));
 
                 return File(binary, "image/png");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+        }
+        [HttpDelete("DeleteItemImage/{id}")]
+        public async Task<IActionResult> DeleteImage(string id)
+        {
+            try
+            {
+
+                    await this.imageService.DeleteItemImage(Guid.Parse(id));
+                return Ok();
+
             }
             catch
             {

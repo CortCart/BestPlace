@@ -6,7 +6,7 @@ public class ItemDetailsViewModel
 
     public string Label { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public decimal Price { get; set; }
 
@@ -25,7 +25,7 @@ public class ItemDetailsViewModel
     public string BuyerId { get; set; }
 
     public string BuyerName { get; set; }
-
+    public bool IsMine { get; set; }
     public ICollection<ItemImageDetailsViewModel> Images { get; set; } = new List<ItemImageDetailsViewModel>();
 
 }
