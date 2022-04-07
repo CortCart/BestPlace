@@ -14,9 +14,9 @@ public class ItemImages
     [ForeignKey(nameof(ImageId))]
     public Image Image { get; set; }
 
-    [Required]
-    public Guid ItemId { get; set; }
+  
+    public Guid? ItemId { get; set; }
 
     [ForeignKey(nameof(ItemId))]
-    public Item Item { get; set; }
+    public Item? Item { get; set; }
 }

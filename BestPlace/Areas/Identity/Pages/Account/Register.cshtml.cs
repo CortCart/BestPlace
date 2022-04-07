@@ -5,11 +5,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO.Pipelines;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using BestPlace.Core.Contracts;
+using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -30,12 +33,14 @@ namespace BestPlace.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IImageService imageService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
+            IImageService imageService,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -44,6 +49,7 @@ namespace BestPlace.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.imageService = imageService;
         }
 
         /// <summary>
@@ -112,6 +118,10 @@ namespace BestPlace.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Picture")]
+            public IFormFile Img { get; set; }
+
         }
 
 
@@ -133,15 +143,37 @@ namespace BestPlace.Areas.Identity.Pages.Account
                 user.Email = Input.Email;
                 user.Address = Input.Address;
                 user.Phone = Input.Phone;
-                //user.Image = Array.Empty<byte>();
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.UserName = $"{Input.FirstName}{Input.LastName}";
+                var image = new Image();
+                user.Image= new Image();
+                if (Input.Img!=null)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+
+                    {
+
+                      await  Input.Img.OpenReadStream().CopyToAsync(ms);
+
+                      image.Source = ms.ToArray();
+
+                    }
+                }
+                else
+                {
+                    image.Source = Array.Empty<byte>();
+                }
+
+               
+             //  await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+             user.Image.Source = image.Source;
+             user.ImageId = image.Id;
+             await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                  await  this.imageService.AddImageProfile(image, user.Id);
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

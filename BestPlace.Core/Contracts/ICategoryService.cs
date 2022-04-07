@@ -7,7 +7,7 @@ public interface ICategoryService
     Task<IEnumerable< CategoryListViewModel>> All();
 
 
-    Task AddCategory(CategoryAddViewModel model);
+    Task<bool> AddCategory(CategoryAddViewModel model);
 
     Task<CategoryEditViewModel> GetCategoryForEdit(Guid id);
 

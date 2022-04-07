@@ -21,7 +21,7 @@ public class UserService:IUserService
         this.repository = repository;
         this.userManager = userManager;
     }
-    public async Task<IEnumerable<UserListViewModel>> GetUsers()
+    public async Task<IEnumerable<UserListViewModel>> GetAllUsers()
     {
         var users = this.repository.All<ApplicationUser>()
             .Select(x => new UserListViewModel()
@@ -75,6 +75,9 @@ public class UserService:IUserService
 
     public async Task<ApplicationUser> GetUserById(string id)
     {
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
+        if (user == null) throw new ArgumentException("Unknown user");
+
         return await this.repository.GetByIdAsync<ApplicationUser>(id);
     }
 

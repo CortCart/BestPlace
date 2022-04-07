@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BestPlace.Core.Services;
 
-public class CategoryService:ICategoryService
+public class CategoryService : ICategoryService
 {
     private readonly IApplicatioDbRepository repository;
 
@@ -28,36 +28,42 @@ public class CategoryService:ICategoryService
         return categorys;
     }
 
-    public async Task AddCategory(CategoryAddViewModel model)
+    public async Task<bool> AddCategory(CategoryAddViewModel model)
     {
-
-        byte[] bytes = null;
-        using (MemoryStream ms = new MemoryStream())
-
+        try
         {
+            byte[] bytes = null;
+            using (MemoryStream ms = new MemoryStream())
 
-            model.Image.OpenReadStream().CopyTo(ms);
+            {
 
-            bytes = ms.ToArray();
+                model.Image.OpenReadStream().CopyTo(ms);
 
-        }
-        var img = new Image()
-        {
-            Source = bytes
-        };
+                bytes = ms.ToArray();
 
-        var category = new Category
-        {
-            Name = model.Name,
-            ImageId = img.Id,
-            Image = img
-        };
-        await this.repository.AddAsync(img);
+            }
 
-        await this.repository.AddAsync(category);
+            var img = new Image()
+            {
+                Source = bytes
+            };
+
+            var category = new Category
+            {
+                Name = model.Name,
+                ImageId = img.Id,
+                Image = img
+            };
+            await this.repository.AddAsync(img);
+
+            await this.repository.AddAsync(category);
             await this.repository.SaveChangesAsync();
-       
-
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public async Task<CategoryEditViewModel> GetCategoryForEdit(Guid id)
@@ -79,31 +85,36 @@ public class CategoryService:ICategoryService
         if (category == null) throw new ArgumentException("Unknown category");
 
 
-       
-             this.repository.Delete(category);
-            await this.repository.SaveChangesAsync();
-           
-       
+
+        this.repository.Delete(category);
+        await this.repository.SaveChangesAsync();
+
+
     }
 
     public async Task EditCategory(CategoryEditViewModel model)
     {
-        var category = await this.repository.GetByIdAsync<Category>(model.Id);
-       
-        byte[] bytes = null;
-        using (MemoryStream ms = new MemoryStream())
+        
 
-        {
 
-          await  model.Image.OpenReadStream().CopyToAsync(ms);
+            var category = await this.repository.GetByIdAsync<Category>(model.Id);
+            if (category == null) throw new ArgumentException("Unknown category");
 
-            bytes = ms.ToArray();
+            byte[] bytes = null;
+            using (MemoryStream ms = new MemoryStream())
 
-        }
-       
+            {
+
+                await model.Image.OpenReadStream().CopyToAsync(ms);
+
+                bytes = ms.ToArray();
+
+            }
+
             category.Name = model.Name;
-            category.Image.Source =bytes;
+            category.Image.Source = bytes;
             await this.repository.SaveChangesAsync();
+           
        
     }
 }

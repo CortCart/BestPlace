@@ -70,10 +70,7 @@ public class ItemService : IItemService
         return items;
     }
 
-    public Task<ItemDetailsViewModel> GetItemDetails(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+
 
     public async Task IsMine(Guid id, string userId)
     {
@@ -146,12 +143,11 @@ public class ItemService : IItemService
     }
 
 
-    public async Task<ItemDetailsViewModel> GetItemDetails(Guid id, string userId)
+    public async Task<ItemDetailsViewModel> GetItemDetails(Guid id)
     {
         var item = await this.repository.All<Item>().Include(x => x.Images).Include(x => x.Owner).Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
         if (item == null) throw new ArgumentException("Unknown item");
-        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
-        if (user == null) throw new ArgumentException("Unknow user");
+       
 
         var itemDetails = new ItemDetailsViewModel
         {
@@ -164,7 +160,6 @@ public class ItemService : IItemService
             OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
             CategoryId = item.CategoryId,
             CategoryName = item.Category.Name,
-            IsMine = item.OwnerId == userId,
             Images = item.Images.Select(y => new ItemImageDetailsViewModel
             {
                 Id = y.Id,
@@ -198,72 +193,91 @@ public class ItemService : IItemService
         return itemDetails;
     }
 
-    public async Task Add(ItemAddViewModel model, string userId)
+    public async Task<bool> AddItem(ItemAddViewModel model, string userId)
     {
-        var item = new Item()
+        try
         {
-            Label = model.Label,
-            Description = model.Description,
-            Price = model.Price,
-            CategoryId = Guid.Parse(model.CategoryId),
-            OwnerId = userId
-        };
-
-        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
-        var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.CategoryId));
-
-        user.MyItems.Add(item);
-        category.Items.Add(item);
-
-        item.Owner = user;
-        item.Category = category;
-
-        var images = new List<ItemImages>();
-        foreach (var image in model.Images)
-        {
-            byte[] bytes = null;
-            using (MemoryStream ms = new MemoryStream())
+            var item = new Item()
             {
+                Label = model.Label,
+                Description = model.Description,
+                Price = model.Price,
+                CategoryId = Guid.Parse(model.CategoryId),
+                OwnerId = userId
+            };
 
-                await image.OpenReadStream().CopyToAsync(ms);
+            var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+            var category = await this.repository.GetByIdAsync<Category>(Guid.Parse(model.CategoryId));
 
-                bytes = ms.ToArray();
+            user.MyItems.Add(item);
+            category.Items.Add(item);
+
+            item.Owner = user;
+            item.Category = category;
+
+            var images = new List<ItemImages>();
+            foreach (var image in model.Images)
+            {
+                byte[] bytes = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+
+                    await image.OpenReadStream().CopyToAsync(ms);
+
+                    bytes = ms.ToArray();
+
+                }
+
+                var img = new Image
+                {
+                    Source = bytes
+                };
+                var itemImage = new ItemImages()
+
+                {
+                    ItemId = item.Id,
+                    ImageId = img.Id
+                };
+
+                images.Add(itemImage);
+                await this.repository.AddAsync(img);
+                await this.repository.AddAsync(itemImage);
 
             }
 
-            var img = new Image
-            {
-                Source = bytes
-            };
-            var itemImage = new ItemImages()
 
-            {
-                ItemId = item.Id,
-                ImageId = img.Id
-            };
+            await this.repository.AddAsync(item);
 
-            images.Add(itemImage);
-            await this.repository.AddAsync(img);
-            await this.repository.AddAsync(itemImage);
-
+            await this.repository.SaveChangesAsync();
+            return true;
         }
-
-
-        await this.repository.AddAsync(item);
-
-        await this.repository.SaveChangesAsync();
+        catch 
+        {
+            return false;
+        }
+       
 
     }
 
 
 
-    public async Task DeleteItem(Guid id)
+    public async Task DeleteItem(Guid id ,string userId)
     {
         var item = await this.repository.GetByIdAsync<Item>(id);
         if (item == null) throw new ArgumentException("Unknown item");
+        IsMine( id,  userId);
+        item.Images = new List<ItemImages>();
+        await this.repository.SaveChangesAsync();
 
         this.repository.Delete<Item>(item);
         await this.repository.SaveChangesAsync();
     }
 
+    public async Task DeleteItemAsAdmin(Guid id)
+    {
+        var item = await this.repository.GetByIdAsync<Item>(id);
+        if (item == null) throw new ArgumentException("Unknown item");
+        this.repository.Delete<Item>(item);
+        await this.repository.SaveChangesAsync();
+    }
 }

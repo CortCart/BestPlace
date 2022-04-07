@@ -19,11 +19,15 @@ namespace BestPlace.Core.Services
         {
            int userCount =  this.repository.All<ApplicationUser>().Count();
             int itemsCount = this.repository.All<Item>().Count();
+            int categoriesCount = this.repository.All<Category>().Count();
+            int questionnaireCount = this.repository.All<Questionnaire>().Count();
 
             return new AllCounts
             {
                 UsersCount = userCount,
                 ItemsCount = itemsCount,
+                CategoriesCount = categoriesCount,
+                QuestionnaireCount = questionnaireCount
             };
         }
     }

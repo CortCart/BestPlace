@@ -140,7 +140,7 @@ namespace BestPlace.Controllers
             }
 
 
-            await this.itemService.Add(model, this.userManager.GetUserId(User));
+            await this.itemService.AddItem(model, this.userManager.GetUserId(User));
 
             return RedirectToAction("All", new
             {
@@ -154,7 +154,7 @@ namespace BestPlace.Controllers
 
             try
             {
-                var item = await this.itemService.GetItemDetails(id, this.userManager.GetUserId(User));
+                var item = await this.itemService.GetItemDetails(id);
                 return View(item);
             }
             catch

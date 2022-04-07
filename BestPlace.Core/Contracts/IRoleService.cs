@@ -4,7 +4,7 @@ namespace BestPlace.Core.Contracts;
 
 public interface IRoleService
 {
-    Task<IEnumerable<RoleListViewModel>> All();
+    Task<IEnumerable<RoleListViewModel>> GetAllRoles();
 
-    Task AddRole(string name);
+    Task<bool> AddRole(string name);
 }

@@ -18,7 +18,7 @@ namespace BestPlace.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            var questionnaire =  await  this.questionnaireService.All();
+            var questionnaire =  await  this.questionnaireService.GetAllQuestionnairies();
             return View(questionnaire);
         }
 

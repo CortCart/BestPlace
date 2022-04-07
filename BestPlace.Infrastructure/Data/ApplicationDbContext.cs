@@ -26,9 +26,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ItemImages>()
             .HasOne(x => x.Item)
             .WithMany(h => h.Images)
-            .HasForeignKey(x => x.ItemId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .OnDelete(DeleteBehavior.NoAction);
+            //.HasForeignKey(x => x.ItemId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+       
 
         base.OnModelCreating(builder);
     }

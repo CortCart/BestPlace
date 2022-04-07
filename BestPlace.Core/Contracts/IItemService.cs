@@ -8,7 +8,6 @@ public interface IItemService
 
     Task<IEnumerable<ItemListViewModel>> All();
 
-    Task<ItemDetailsViewModel> GetItemDetails(Guid id);
 
     Task IsMine(Guid id, string userId);
 
@@ -16,12 +15,15 @@ public interface IItemService
 
     Task Edit(ItemEditViewModel model, string userId);
 
-    Task<ItemDetailsViewModel> GetItemDetails(Guid id, string userId);
+    Task<ItemDetailsViewModel> GetItemDetails(Guid id);
 
     Task<ItemDetailsViewModel> GetItemDetailsAsAdmin(Guid id);
 
-    Task Add(ItemAddViewModel model, string userId);
+    Task<bool> AddItem(ItemAddViewModel model, string userId);
 
 
-    Task DeleteItem(Guid id);
+    Task DeleteItem(Guid id, string userId);
+
+    Task DeleteItemAsAdmin(Guid id);
+
 }

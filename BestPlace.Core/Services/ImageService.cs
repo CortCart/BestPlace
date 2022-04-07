@@ -1,5 +1,6 @@
 ﻿using BestPlace.Core.Contracts;
 using BestPlace.Infrastructure.Data;
+using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,14 @@ public class ImageService : IImageService
         var itemImage = await this.repository.All<ItemImages>().Include(x => x.Item).Include(x => x.Image).FirstOrDefaultAsync(x => x.Id == id);
         if (itemImage == null) throw new ArgumentException("Unknown image");
         this.repository.Delete(itemImage);
+        await this.repository.SaveChangesAsync();
+    }
+
+    public async  Task AddImageProfile(Image image, string userId)
+    {
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+        if(user==null) throw new ArgumentException("Unknown user");
+        await this.repository.AddAsync(image);
         await this.repository.SaveChangesAsync();
     }
 }

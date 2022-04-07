@@ -5,7 +5,7 @@ namespace BestPlace.Core.Contracts;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserListViewModel>> GetUsers();
+    Task<IEnumerable<UserListViewModel>> GetAllUsers();
 
     Task<UserDetailsViewModel> GetUserDetails( string id);
 

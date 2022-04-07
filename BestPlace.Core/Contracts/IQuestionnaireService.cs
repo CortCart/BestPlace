@@ -4,9 +4,9 @@ namespace BestPlace.Core.Contracts;
 
 public interface IQuestionnaireService
 {
-    Task<IEnumerable<QuestionnaireListViewModel>> All();
+    Task<IEnumerable<QuestionnaireListViewModel>> GetAllQuestionnairies();
 
     Task<QuestionnaireDetailsViewModel> GetQuestionnaireDetails(Guid id);
 
-    Task AddQuestionnaire(QuestionnaireAddViewModel model);
+    Task<bool> AddQuestionnaire(QuestionnaireAddViewModel model);
 }

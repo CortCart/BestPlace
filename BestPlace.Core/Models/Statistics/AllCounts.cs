@@ -12,6 +12,9 @@ namespace BestPlace.Core.Models.Statistics
 
         public int ItemsCount { get; set; }
 
-       
+        public int CategoriesCount { get; set; }
+
+        public int QuestionnaireCount { get; set; }
+
     }
 }

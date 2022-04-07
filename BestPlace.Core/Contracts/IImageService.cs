@@ -1,4 +1,6 @@
-﻿namespace BestPlace.Core.Contracts;
+﻿using BestPlace.Infrastructure.Data;
+
+namespace BestPlace.Core.Contracts;
 
 public interface IImageService
 {
@@ -7,4 +9,6 @@ public interface IImageService
     Task<byte[]> GetItemImage(Guid id);
 
     Task DeleteItemImage(Guid id);
+
+    Task AddImageProfile(Image image ,string userId);
 }

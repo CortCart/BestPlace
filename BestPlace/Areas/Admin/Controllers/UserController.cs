@@ -73,7 +73,7 @@ namespace BestPlace.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            var users = await this.userService.GetUsers();
+            var users = await this.userService.GetAllUsers();
             return View(users);
         }
 

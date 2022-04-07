@@ -1,8 +1,11 @@
 ﻿@using BestPlace.Core.Models.Item
+@using BestPlace.Infrastructure.Data.Identity
+@using Microsoft.AspNetCore.Identity
 @model ItemDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
+@inject UserManager<ApplicationUser> UserManager
 
 <section class="clean-block clean-catalog dark">
     <div class="container">
@@ -31,7 +34,7 @@
                                 <h3>@Model.Price BGN</h3>
                             </div>
                             <button class="btn btn-primary" type="button"><i class="icon-basket"></i>Info for contact</button>
-                           @if (@Model.IsMine)
+                           @if (@Model.OwnerId == UserManager.GetUserId(User))
                            {
                                <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id"  class="btn btn-primary" ><i ></i>Edit</a>
 

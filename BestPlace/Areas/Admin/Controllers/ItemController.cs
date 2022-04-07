@@ -24,7 +24,7 @@ namespace BestPlace.Areas.Admin.Controllers
         {
             try
             {
-                await this.itemService.DeleteItem(id);
+                await this.itemService.DeleteItemAsAdmin(id);
 
                 return RedirectToAction("All");
             }
@@ -40,7 +40,7 @@ namespace BestPlace.Areas.Admin.Controllers
         {
             try
             {
-                var item = await this.itemService.GetItemDetails(id);
+                var item = await this.itemService.GetItemDetailsAsAdmin(id);
                 return View(item);
             }
             catch 

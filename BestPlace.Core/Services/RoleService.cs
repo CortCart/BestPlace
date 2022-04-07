@@ -19,7 +19,7 @@ public class RoleService:IRoleService
         this.userManager = userManager;
     }
 
-    public async Task<IEnumerable<RoleListViewModel>> All()
+    public async Task<IEnumerable<RoleListViewModel>> GetAllRoles()
     {
         return await this.roleManager.Roles.Select(x => new RoleListViewModel()
         {
@@ -27,11 +27,22 @@ public class RoleService:IRoleService
         }).ToListAsync();
     }
 
-    public async Task AddRole(string name)
+    public async Task<bool> AddRole(string name)
     {
-      await  this.roleManager.CreateAsync(new IdentityRole()
-        {
-            Name = name
-        });
+     
+      try
+      {
+          await this.roleManager.CreateAsync(new IdentityRole()
+          {
+              Name = name
+          });
+          return true;
+      }
+      catch 
+      {
+         
+          return false;
+      }
+
     }
 }

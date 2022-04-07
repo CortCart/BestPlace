@@ -15,7 +15,7 @@ namespace BestPlace.Areas.Admin.Controllers
 
         public async Task<IActionResult> All()
         {
-            var roles = await this.roleService.All();
+            var roles = await this.roleService.GetAllRoles();
             return View(roles);
         }
 

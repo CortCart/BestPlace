@@ -16,7 +16,7 @@ public class QuestionnaireService:IQuestionnaireService
         this.repository = repository;
     }
 
-    public async Task<IEnumerable<QuestionnaireListViewModel>> All()
+    public async Task<IEnumerable<QuestionnaireListViewModel>> GetAllQuestionnairies()
     {
         var questionnaires = await this.repository.All<Questionnaire>()
             .Select(x => new QuestionnaireListViewModel
@@ -50,17 +50,22 @@ public class QuestionnaireService:IQuestionnaireService
             };
     }
 
-    public async Task AddQuestionnaire(QuestionnaireAddViewModel model)
+    public async Task<bool> AddQuestionnaire(QuestionnaireAddViewModel model)
     {
-        
-           var questionnaire = new Questionnaire
-           {
-               Name = model.Name,
-               Description = model.Description
-           };
-           await this.repository.AddAsync(questionnaire);
-           await this.repository.SaveChangesAsync();
-          
-      
+        try
+        {
+            var questionnaire = new Questionnaire
+            {
+                Name = model.Name,
+                Description = model.Description
+            };
+            await this.repository.AddAsync(questionnaire);
+            await this.repository.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

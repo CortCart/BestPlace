@@ -11,45 +11,48 @@
         <div class="block-heading">
             <h2 class="text-info">Create a new account.</h2>
         </div>
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form  enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="mb-3">
-                <label asp-for="Input.Email" class="form-label">Email</label>
-                <input autocomplete="email" asp-for="Input.Email" class="form-control item" type="email">
-            </div>
+        <div class="mb-3">
+            <label asp-for="Input.Email" class="form-label">Email</label>
+            <input autocomplete="email" asp-for="Input.Email" class="form-control item" type="email">
+        </div>
             
             
-            <div class="mb-3">
-                <label asp-for="Input.FirstName" class="form-label">First name</label>
-                <input  asp-for="Input.FirstName" class="form-control item" type="text">
-            </div>
+        <div class="mb-3">
+            <label asp-for="Input.FirstName" class="form-label">First name</label>
+            <input  asp-for="Input.FirstName" class="form-control item" type="text">
+        </div>
             
-            <div class="mb-3">
-                <label asp-for="Input.LastName" class="form-label">Last name</label>
-                <input  asp-for="Input.LastName" class="form-control item" type="text">
-            </div>
+        <div class="mb-3">
+            <label asp-for="Input.LastName" class="form-label">Last name</label>
+            <input  asp-for="Input.LastName" class="form-control item" type="text">
+        </div>
             
-            <div class="mb-3">
-                <label asp-for="Input.Address" class="form-label">Address</label>
-                <input  asp-for="Input.Address" class="form-control item" type="text">
-            </div>
+        <div class="mb-3">
+            <label asp-for="Input.Address" class="form-label">Address</label>
+            <input  asp-for="Input.Address" class="form-control item" type="text">
+        </div>
             
+        <div class="mb-3">
+            <label asp-for="Input.Phone" class="form-label">Phone</label>
+            <input  asp-for="Input.Phone" class="form-control item" type="text">
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Input.Password" class="form-label">Password</label>
+            <input autocomplete="password" asp-for="Input.Password" class="form-control item" type="password">
+        </div>
             <div class="mb-3">
-                <label asp-for="Input.Phone" class="form-label">Phone</label>
-                <input  asp-for="Input.Phone" class="form-control item" type="text">
+            <label asp-for="Input.ConfirmPassword" class="form-label">Confirm password</label>
+            <input autocomplete="confirm-password" asp-for="Input.ConfirmPassword" class="form-control item" type="password">
+        </div>
+            <div class="mb-3">
+                <label asp-for="Input.Img" class="form-label">Picture</label>
+                <input  asp-for="Input.Img" class="form-control item" type="file">
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Input.Password" class="form-label">Password</label>
-                <input autocomplete="password" asp-for="Input.Password" class="form-control item" type="password">
-            </div>
-            
-            <div class="mb-3">
-                <label asp-for="Input.ConfirmPassword" class="form-label">Confirm password</label>
-                <input autocomplete="confirm-password" asp-for="Input.ConfirmPassword" class="form-control item" type="password">
-            </div>
-            
             <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
             
             <div>
@@ -84,7 +87,6 @@
                 }
             }
         </form>
-        
     </div>
     
 </section>

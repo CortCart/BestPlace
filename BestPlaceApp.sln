@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BestPlace.Api", "BestPlace.Api\BestPlace.Api.csproj", "{C805CB01-4BB7-45FC-92DD-3A3137A1A4B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace.Test", "BestPlace.Test\BestPlace.Test.csproj", "{E3A32A57-04F6-41D3-A50D-E6692DB073CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPlace.Test", "BestPlace.Test\BestPlace.Test.csproj", "{E3821F90-E298-4524-815F-77B62D643ED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{C805CB01-4BB7-45FC-92DD-3A3137A1A4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C805CB01-4BB7-45FC-92DD-3A3137A1A4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C805CB01-4BB7-45FC-92DD-3A3137A1A4B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3A32A57-04F6-41D3-A50D-E6692DB073CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3A32A57-04F6-41D3-A50D-E6692DB073CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3A32A57-04F6-41D3-A50D-E6692DB073CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3A32A57-04F6-41D3-A50D-E6692DB073CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3821F90-E298-4524-815F-77B62D643ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3821F90-E298-4524-815F-77B62D643ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3821F90-E298-4524-815F-77B62D643ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3821F90-E298-4524-815F-77B62D643ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
