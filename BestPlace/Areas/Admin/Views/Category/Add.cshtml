@@ -14,21 +14,23 @@
                   </div>
                   <div class="login_form">
                       <form method="post" enctype="multipart/form-data">
-">
-                        <fieldset>
-                           <div class="field">
-                               <label class="label_field">Category name</label>
-                              <input type="text" asp-for="Name" name="name" />
-                           </div>
-                           <div class="field">
-                              <label class="label_field">Password</label>
-                              <input type="file" asp-for="Image" name="Image" />
-                           </div>
-                            <div class="field margin_0">
-                              <label class="label_field hidden">hidden label</label>
-                              <button type="submit" value="Upload" class="main_bt">Add</button>
-                           </div>
-                        </fieldset>
+
+                    <fieldset>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="field">
+                            <label class="label_field">Category name</label>
+                            <input type="text" asp-for="Name" name="name"/>
+                        </div>
+                        <div class="field">
+                            <label class="label_field">Image</label>
+                            <input type="file" asp-for="Image" name="Image"/>
+                        </div>
+                        <div class="field margin_0">
+                            <label class="label_field hidden">hidden label</label>
+                            <button type="submit" value="Upload" class="main_bt">Add</button>
+                        </div>
+                    </fieldset>
                      </form>
                   </div>
                </div>

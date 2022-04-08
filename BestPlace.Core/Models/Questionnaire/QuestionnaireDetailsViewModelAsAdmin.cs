@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BestPlace.Core.Models.Category;
 
-namespace BestPlace.Core.Models;
+namespace BestPlace.Core.Models.Admin;
 
-public class QuestionnaireDetailsViewModel
+public class QuestionnaireDetailsViewModelAsAdmin
 {
     public Guid Id { get; set; }
 
@@ -15,4 +15,5 @@ public class QuestionnaireDetailsViewModel
     [MaxLength(500)]
     public string Description { get; set; }
 
+    public ICollection<QuestionnaireSubmitViewModel> Submits { get; set; } = new List<QuestionnaireSubmitViewModel>();
 }

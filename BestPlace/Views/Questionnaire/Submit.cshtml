@@ -1,0 +1,29 @@
+﻿@using BestPlace.Core.Models.Questionnaire
+@model SubmitQuestionnaireAddViewModel
+
+@{
+    ViewData["Title"] ="Add";
+    var description = (string)ViewBag.Description;
+    var name = (string) ViewBag.Name;
+    var id =  ViewBag.id;
+   
+}
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">@name</h2>
+            <p>@description</p>
+        </div>
+        <form asp-area="" asp-controller="Questionnaire"  asp-action="Submit" asp-route-id="@id"  method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Answer" class="form-label">Answer</label>
+                <input asp-for="Answer" class="form-control item" type="text">
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+    </div>
+</section>

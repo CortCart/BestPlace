@@ -64,6 +64,7 @@ public class ItemService : IItemService
                 Likes = x.Likes,
                 CategoryId = x.CategoryId,
                 CategoryName = x.Category.Name,
+                Price = x.Price,
                 OwnerId = x.OwnerId,
                 Owner = $"{x.Owner.FirstName} {x.Owner.LastName}"
             }).ToListAsync();
@@ -184,7 +185,7 @@ public class ItemService : IItemService
             OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
             CategoryId = item.CategoryId,
             CategoryName = item.Category.Name,
-
+            
             Images = item.Images.Select(y => new ItemImageDetailsViewModel
             {
                 Id = y.Id,
@@ -275,8 +276,9 @@ public class ItemService : IItemService
 
     public async Task DeleteItemAsAdmin(Guid id)
     {
-        var item = await this.repository.GetByIdAsync<Item>(id);
+        var item = await this.repository.All<Item>().Include(x=>x.Images).FirstOrDefaultAsync(x=>x.Id==id);
         if (item == null) throw new ArgumentException("Unknown item");
+        item.Images = new List<ItemImages>();
         this.repository.Delete<Item>(item);
         await this.repository.SaveChangesAsync();
     }

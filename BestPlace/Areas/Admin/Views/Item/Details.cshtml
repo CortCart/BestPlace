@@ -42,13 +42,9 @@
                                                    <h3>@Model.Label</h3>
                                                    <ul class="list-unstyled">
                                                        <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.OwnerId">Owner : @Model.OwnerName</a> </li>
-                                                       <li ><i></i>Is bought : @Model.IsBought</li>
-                                                       @if (@Model.IsBought)
-                                                       {
-                                                           <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.BuyerId">Buyer : @Model.BuyerName</a> </li>
-                                                       }
-                                                       <li><i class="fa fa-phone"></i> : @Model.Price</li>
+                                                       <li><i >$</i> : @Model.Price BGN</li>
                                                        <li><i ></i>Category : @Model.CategoryName</li>
+                                                       <a asp-area="Admin" asp-controller="Item" asp-action="Remove" asp-route-id="@Model.Id" >Remove</a>
                                                    </ul>
                                                </div>
                                            </div>

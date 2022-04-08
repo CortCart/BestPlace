@@ -136,6 +136,21 @@ namespace BestPlace.Test
             Assert.ThrowsAsync<ArgumentException>(async () => await service.AddImageProfile(image, "0f8fad5b-d9cb-469f-a165-70867728950o"), "Unknow user");
         }
 
+        //GetImageProfile
+        [Test]
+        public async Task KnownUserMustNotThrowOnGetImageProfile()
+        {
+
+            var service = serviceProvider.GetService<IImageService>();
+
+
+            Assert.DoesNotThrowAsync(async () => await service.GetProfileImage( Guid.Parse( "0f8fad5b-d9cb-469f-a165-70867728950c")));
+        }
+
+       
+
+
+
         [TearDown]
         public void TearDown()
         {
@@ -148,13 +163,15 @@ namespace BestPlace.Test
             {
                 Source = Array.Empty<byte>()
             };
+            image.Id= Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950c");
             var user = new ApplicationUser()
             {
                 Address = "",
                 Email = "test@gmail.com",
                 FirstName = "",
                 LastName = "",
-                Phone = "+359 123 4567"
+                Phone = "+359 123 4567",
+                ImageId = image.Id
             };
             user.Id = "0f8fad5b-d9cb-469f-a165-70867728950d";
             var category = new Category

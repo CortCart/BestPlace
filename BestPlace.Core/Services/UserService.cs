@@ -23,8 +23,10 @@ public class UserService:IUserService
     }
     public async Task<IEnumerable<UserListViewModel>> GetAllUsers()
     {
-        var users = this.repository.All<ApplicationUser>()
-            .Select(x => new UserListViewModel()
+        var users = this.repository.All<ApplicationUser>();
+
+
+        return await    users.Select(x => new UserListViewModel()
             {
                 Id = x.Id,
                 Name = $"{x.FirstName} {x.LastName}",
@@ -34,27 +36,36 @@ public class UserService:IUserService
 
             }).ToListAsync();
 
-        return await users;
+        
     }
 
     public async Task<UserDetailsViewModel> GetUserDetails(string id)
     {
-        var user = await this.GetUserById(id);
+        var user = await this.repository.All<ApplicationUser>().Include(x=>x.Image).Include(x=>x.MyItems).FirstOrDefaultAsync(x=>x.Id==id);
         if (user == null) throw new ArgumentException("Unknown  user");
     
       
 
         var userRoles = await userManager.GetRolesAsync(user);
+        var items = user.MyItems.Select(x => new UserItemDetailsViewModel
+        {
+            Id = x.Id,
+            Name = x.Label
+        }).ToList();
 
+        var imgId = user.Image == null ? Guid.Parse("00000000-0000-0000-0000-000000000000") : user.Image.Id;
 
         return new UserDetailsViewModel()
         {
+            Id = id,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
             Address = user.Address,
             Phone = user.Phone,
-            Roles = userRoles
+            Items = items,
+            Roles = userRoles,
+            ImageId =imgId
         };
     }
 

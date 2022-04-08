@@ -14,6 +14,23 @@ namespace BestPlace.Api.Controllers
             this.imageService = imageService;
         }
 
+        [HttpGet("GetProfileImage/{id}")]
+        public async Task<IActionResult> GetProfileImage(Guid id)
+        {
+            try
+            {
+                var binary = await this.imageService.GetProfileImage(id);
+
+                return File(binary, "image/png");
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+
+        }
+
         [HttpGet("GetCategoryImage/{id}")]
         public async Task<IActionResult> GetCategoryImage(string id)
         {

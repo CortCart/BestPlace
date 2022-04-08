@@ -33,8 +33,6 @@
                                               <th>Price</th>
                                               <th>Owner</th>
                                               <th>Category</th>
-                                              <th>Owner</th>
-
                                           </tr>
                                        </thead>
                                        <tbody>
@@ -43,7 +41,7 @@
                                            <tr>
                                                <td>  @item.Label</td>
                                                <td>@item.Likes</td>
-                                               <td>@item.Price</td>
+                                               <td>@item.Price BGN</td>
                                                <th><a asp-area="admin" asp-action="Details" asp-controller="User" asp-route-id ="@item.OwnerId">@item.Owner</a></th>
                                                <th><a >@item.CategoryName</a></th>
                                                <th><a asp-area="admin" asp-action="Remove" asp-controller="Item" asp-route-id ="@item.Id"> Remove</a></th>

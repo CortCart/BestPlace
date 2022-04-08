@@ -12,8 +12,6 @@ public class ItemDetailsViewModel
 
     public int Likes { get; set; } = 0;
 
-    public bool IsBought { get; set; }
-
     public Guid CategoryId { get; set; }
 
     public string CategoryName { get; set; }
@@ -22,9 +20,6 @@ public class ItemDetailsViewModel
 
     public string OwnerName { get; set; }
 
-    public string BuyerId { get; set; }
-
-    public string BuyerName { get; set; }
     public ICollection<ItemImageDetailsViewModel> Images { get; set; } = new List<ItemImageDetailsViewModel>();
 
 }

@@ -1,5 +1,5 @@
-﻿@using BestPlace.Core.Models
-@model QuestionnaireDetailsViewModel
+﻿@using BestPlace.Core.Models.Admin
+@model QuestionnaireDetailsViewModelAsAdmin
 @{
     ViewData["Title"] = "Details";
 }
@@ -35,7 +35,7 @@
                                          Answers:
                                          @foreach (var submit in @Model.Submits)
                                          {
-                                             <p ><i> User Name:  </i> : <a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@submit.UserId"></a> </p>
+                                             <p ><i> User Name:  </i> : <a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@submit.UserId">@submit.UserName</a> </p>
                                              <p ><i> Answer:  </i> :@submit.Answer </p>
                                              @Html.Raw("------\n")
                                          }

@@ -51,7 +51,7 @@
                 <div class="sidebar_blog_2">
                   <h4>General</h4>
                   <ul class="list-unstyled components">
-                     <li><a href="dashboard.html"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a></li>
+                     <li><a  asp-area="Admin" asp-controller="Home" asp-action="Dashboard" ><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a></li>
                      
                      <li class="active">
                         <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Users</span></a>
@@ -60,15 +60,7 @@
                               <a asp-area="Admin" asp-controller="User" asp-action="All">> <span>All</span></a>
                            </li>
                         </ul>
-                     </li>  
-                      <li class="active">
-                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Deals</span></a>
-                          <ul class="list-unstyled collapse show">
-                              <li>
-                                  <a asp-area="Admin" asp-controller="Deal" asp-action="All">> <span>Deals</span></a>
-                              </li>
-                          </ul>
-                      </li>
+                     </li>
                       <li class="active">
                           <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Items</span></a>
                           <ul class="list-unstyled collapse show">
@@ -123,16 +115,7 @@
                     <div class="full">
                         <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                         <div class="logo_section">
-                            <a href="index.html"><img class="img-responsive" src="~/Admin/images/logo/logo.png" alt="#" /></a>
-                        </div>
-                        <div class="right_topbar">
-                            <div class="icon_info">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
-                                    <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a></li>
-                                </ul>
-                            </div>
+                            <a asp-area="Admin" asp-controller="Home" asp-action="Dashboard"><img class="img-responsive" src="~/Admin/images/logo/logo.png" alt="#" /></a>
                         </div>
                     </div>
                 </nav>

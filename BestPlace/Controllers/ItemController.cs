@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BestPlace.Controllers
 {
-    [Authorize]
+  
     public class ItemController : Controller
     {
         private readonly ICategoryService categoryService;
@@ -126,6 +126,15 @@ namespace BestPlace.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(ItemAddViewModel model)
         {
+            var categories = await this.categoryService.All();
+
+            var categoriesForView = categories
+                .Select(r => new SelectListItem()
+                {
+                    Text = r.Name,
+                    Value = r.Id.ToString()
+                }).ToList();
+            ViewBag.Categories = categoriesForView;
             if (!ModelState.IsValid)
             {
                 foreach (var errors in ModelState.Values)
@@ -140,7 +149,11 @@ namespace BestPlace.Controllers
             }
 
 
-            await this.itemService.AddItem(model, this.userManager.GetUserId(User));
+            if (!await this.itemService.AddItem(model, this.userManager.GetUserId(User)))
+            {
+                ModelState.AddModelError(string.Empty, "Error while add item");
+                return View();
+            }
 
             return RedirectToAction("All", new
             {

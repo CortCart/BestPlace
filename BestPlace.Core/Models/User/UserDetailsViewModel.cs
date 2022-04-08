@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace BestPlace.Core.Models.User;
 
@@ -29,7 +30,13 @@ public class UserDetailsViewModel
     [Display(Name = "Phone")]
     public string Phone { get; set; }
 
+    
+    [Required]
+    [DisplayName("ImageId")]
+    public Guid ImageId { get; set; }
 
     public ICollection<string> Roles { get; set; } = new List<string>();
+
+    public ICollection<UserItemDetailsViewModel> Items { get; set; }
 
 }

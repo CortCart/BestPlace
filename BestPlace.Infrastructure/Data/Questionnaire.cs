@@ -16,6 +16,8 @@ public class Questionnaire
     [MaxLength(500)]
     public string Description { get; set; }
 
+    [Required]
+    public DateTime DueDate { get; set; }
 
     public ICollection<SubmitQuestionnaire> SubmitQuestionnaires { get; set; } = new List<SubmitQuestionnaire>();
 }

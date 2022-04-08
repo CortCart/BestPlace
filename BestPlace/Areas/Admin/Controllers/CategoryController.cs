@@ -31,12 +31,26 @@ namespace BestPlace.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
+                    foreach (var errors in ModelState.Values)
+                    {
+                        foreach (var error in errors.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                        }
+                    }
+
                 return View(model);
             }
 
-            await categoryService.AddCategory(model);
+            if (!await categoryService.AddCategory(model))
+            {
+                ModelState.AddModelError(string.Empty, "Error while add category");
+
+            }
             
-                return RedirectToAction("All");
+            
+                return RedirectToAction(nameof(All));
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -57,9 +71,17 @@ namespace BestPlace.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
+                foreach (var errors in ModelState.Values)
+                {
+                    foreach (var error in errors.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                    }
+                }
                 return View(model);
             }
 
+           
             await categoryService.EditCategory(model);
           
 

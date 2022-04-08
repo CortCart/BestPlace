@@ -21,7 +21,11 @@ public class ImageService : IImageService
         if (category == null) throw new ArgumentException("Unknown category");
         return category.Image.Source;
     }
-
+    public async Task<byte[]> GetProfileImage(Guid id)
+    {
+        var image = await this.repository.All<Image>().FirstOrDefaultAsync(x => x.Id == id);
+        return image.Source;
+    }
     public async Task<byte[]> GetItemImage(Guid id)
     {
         var itemImage = await this.repository.All<ItemImages>().Include(x=>x.Item).Include(x=>x.Image).FirstOrDefaultAsync(x=>x.Id==id);

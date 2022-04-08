@@ -27,8 +27,26 @@ namespace BestPlace.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(RoleAddViewModel model)
         {
-            await this.roleService.AddRole(model.Name);
-            return RedirectToAction("All");
+            if (!ModelState.IsValid)
+            {
+                foreach (var errors in ModelState.Values)
+                {
+                    foreach (var error in errors.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                    }
+                }
+
+                return View(model);
+            }
+
+            if (!await this.roleService.AddRole(model.Name))
+            {
+                ModelState.AddModelError(string.Empty,"Error while add role");
+
+            }
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

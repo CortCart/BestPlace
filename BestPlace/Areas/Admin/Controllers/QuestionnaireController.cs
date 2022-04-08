@@ -1,4 +1,5 @@
-﻿using BestPlace.Core.Constants;
+﻿using System.Globalization;
+using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
 using BestPlace.Core.Models;
 using BestPlace.Models;
@@ -33,20 +34,46 @@ namespace BestPlace.Areas.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                if (!ModelState.IsValid)
+                {
+                    foreach (var errors in ModelState.Values)
+                    {
+                        foreach (var error in errors.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                        }
+                    }
+
+                    return View(model);
+                }
             }
 
-         await   this.questionnaireService.AddQuestionnaire(model);
            
 
+            DateTime date;
+        bool isTrue =DateTime.TryParseExact(model.DueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+        if (!isTrue)
+        {
+            ModelState.AddModelError(string.Empty, "Error while adding questionnaire");
             return View(model);
+        }
+
+        if (!await this.questionnaireService.AddQuestionnaire(model, date))
+        {
+            ModelState.AddModelError(string.Empty, "Error while adding questionnaire");
+            return View(model);
+
+        }
+
+
+            return RedirectToAction(nameof(All));
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
             try
             {
-                var questionnaire = await this.questionnaireService.GetQuestionnaireDetails(id);
+                var questionnaire = await this.questionnaireService.GetQuestionnaireDetailsAsAdmin(id);
 
                 return View(questionnaire);
             }

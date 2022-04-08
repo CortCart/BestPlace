@@ -9,16 +9,15 @@
             <div class="login_section">
                 <div class="logo_login">
                     <div class="center">
-                        <img width="210" src="images/logo/logo.png" alt="#" />
                     </div>
                 </div>
                 <div class="login_form">
                     <form method="post" >
-                        ">
                         <fieldset>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="field">
                                 <label class="label_field">Role name</label>
-                                <input type="text" asp-for="Name" name="name" />
+                                <input type="text" asp-for="Name" name="name"/>
                             </div>
                             <div class="field margin_0">
                                 <label class="label_field hidden">hidden label</label>
