@@ -16,4 +16,8 @@
     <ProjectReference Include="..\BestPlace.Infrastructure\BestPlace.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Call\" />
+  </ItemGroup>
+
 </Project>

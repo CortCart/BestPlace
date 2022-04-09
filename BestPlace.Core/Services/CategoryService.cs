@@ -81,10 +81,22 @@ public class CategoryService : ICategoryService
 
     public async Task DeleteCategory(Guid id)
     {
-        var category = await this.repository.GetByIdAsync<Category>(id);
+        var category = await this.repository.All<Category>().Include(x=>x.Items).FirstOrDefaultAsync(x=>x.Id==id);
         if (category == null) throw new ArgumentException("Unknown category");
 
+        foreach (var item in category.Items)
+        {
+            item.Images = new List<ItemImages>();
+            var items = await this.repository.All<ItemImages>().Include(x=>x.Item).Where(x => x.ItemId == item.Id).ToListAsync();
+            foreach (var itemImage in item.Images)
+            {
+                itemImage.Item = null;
+                itemImage.ItemId = null;
+            }
+            this.repository.Delete(item);
+        }
 
+        category.Items = new List<Item>();
 
         this.repository.Delete(category);
         await this.repository.SaveChangesAsync();

@@ -38,6 +38,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Image> Images { get; set; }
 
+    public DbSet<Call> Calls { get; set; }
+
     public DbSet<Questionnaire> Questionnaires { get; set; }
 
     public DbSet<SubmitQuestionnaire> SubmitQuestionnaires { get; set; }

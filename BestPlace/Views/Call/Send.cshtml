@@ -1,0 +1,23 @@
+﻿@using BestPlace.Core.Models.Call;
+@model CallAddViewModel
+@{
+    ViewData["Title"] = "Send";
+}
+
+<section class="clean-block clean-form dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">Send call</h2>
+        </div>
+        <form   method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <textarea  asp-for="Problem"  cols="40" rows="5"></textarea>
+            </div>
+
+
+            <button class="btn btn-primary" type="submit">Add</button>
+        </form>
+    </div>
+</section>

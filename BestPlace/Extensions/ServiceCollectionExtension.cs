@@ -1,4 +1,5 @@
-﻿using BestPlace.Core.Contracts;
+﻿using BestPlace.Core.Constants;
+using BestPlace.Core.Contracts;
 using BestPlace.Core.Services;
 using BestPlace.Infrastructure.Data;
 using BestPlace.Infrastructure.Data.Identity;
@@ -20,7 +21,8 @@ public static class ServiceCollectionExtension
         services.AddScoped<IQuestionnaireService, QuestionnaireService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IImageService, ImageService>();
-
+        services.AddScoped<ICallService, CallService>();
+        
         // services.AddRazorPages();
         //.AddRazorPagesOptions(options =>
         //{
