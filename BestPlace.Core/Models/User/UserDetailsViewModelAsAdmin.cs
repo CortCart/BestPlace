@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BestPlace.Core.Models.User;
 
-public class UserDetailsViewModel
+public class UserDetailsViewModelAsAdmin
 {
     public string Id { get; set; }
 
@@ -35,6 +35,8 @@ public class UserDetailsViewModel
     [DisplayName("ImageId")]
     public Guid ImageId { get; set; }
 
-    public ICollection<UserItemDetailsWithImageViewModel> Items { get; set; }
+    public ICollection<string> Roles { get; set; } = new List<string>();
+
+    public ICollection<UserItemDetailsViewModel> Items { get; set; }
 
 }

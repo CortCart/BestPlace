@@ -14,14 +14,20 @@ namespace BestPlace.Areas.Admin.Controllers
 
         private readonly UserManager<ApplicationUser> userManager;
 
+        private readonly SignInManager<ApplicationUser> signInManager;
+
+
         private readonly IUserService userService;
 
         public UserController(RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager, IUserService userService)
+            UserManager<ApplicationUser> userManager, 
+            IUserService userService,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
             this.userService = userService;
+            this.signInManager = signInManager;
         }
 
         public async Task<IActionResult> Role()
@@ -66,6 +72,7 @@ namespace BestPlace.Areas.Admin.Controllers
             if (model.RoleNames?.Length > 0)
             {
                 await userManager.AddToRolesAsync(user, model.RoleNames);
+                await signInManager.RefreshSignInAsync(user);
             }
 
             return RedirectToAction("All");
@@ -81,7 +88,7 @@ namespace BestPlace.Areas.Admin.Controllers
         {
             try
             {
-                var info = await this.userService.GetUserDetails(id);
+                var info = await this.userService.GetUserDetailsAsAdmin(id);
                 return View(info);
             }
             catch

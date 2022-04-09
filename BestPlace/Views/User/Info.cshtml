@@ -1,0 +1,35 @@
+﻿@using BestPlace.Core.Models.User;
+@model UserDetailsViewModel
+@{
+    
+        ViewData["Title"] = "Info";
+    
+}
+<section class="clean-block clean-services dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info">User info</h2>
+            @if(@Model.ImageId!=@Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+            <img class="card-img-top w-50 d-block" src="@Url.Action( "GetProfileImage", "Image", new { id = @Model.ImageId })">
+            }
+            <p>Name : @Model.FirstName @Model.LastName</p>
+            <p>Email : @Model.Email</p>
+            <p>Phone : @Model.Phone </p>
+            <p>Address : @Model.Address</p>
+        </div>
+        <div class="row">
+            @foreach (var item in @Model.Items)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card"><img class="card-img-top w-100 d-block" src="@Url.Action( "GetItemImage", "Image", new { id = item.ImageId })">
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Name</h4>
+                        </div>
+                        <div><a asp-area="" asp-controller="Item" asp-action="Details" asp-route-categoryId="@item.Id" asp-route-query="" class="btn btn-outline-primary btn-sm" type="button">View</a></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

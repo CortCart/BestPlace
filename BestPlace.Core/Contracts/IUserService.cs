@@ -9,6 +9,8 @@ public interface IUserService
 
     Task<UserDetailsViewModel> GetUserDetails( string id);
 
+    Task<UserDetailsViewModelAsAdmin> GetUserDetailsAsAdmin(string id);
+
     Task<ApplicationUser> GetUserById(string id);
 
     Task  DeleteUser(string id);

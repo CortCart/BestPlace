@@ -7,6 +7,7 @@ using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.Category;
 using BestPlace.Core.Services;
 using BestPlace.Infrastructure.Data;
+using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Infrastructure.Data.Repositories;
 using BestPlace.Test.FileSimulation;
 using Microsoft.AspNetCore.Http;
@@ -177,14 +178,42 @@ namespace BestPlace.Test
             {
                 Source = Array.Empty<byte>()
             };
-
+           
+            var user = new ApplicationUser()
+            {
+                Address = "",
+                Email = "test@gmail.com",
+                FirstName = "",
+                LastName = "",
+                Phone = "+359 123 4567",
+            };
+            
+          
             var category = new Category
                 {
                     Name = "Car",
                     ImageId = image.Id
                 };
+           
             category.Id= Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950e");
+            var item = new Item()
+            {
+                Label = "car",
+                Description = "",
+                Price = 0,
+                CategoryId = category.Id,
+                OwnerId = user.Id
+            };
+            var itemImage = new ItemImages()
+
+            {
+                ItemId = item.Id,
+                ImageId = image.Id
+            };
             await repo.AddAsync(image);
+            await repo.AddAsync(item);
+            await repo.AddAsync(itemImage);
+            await repo.AddAsync(user);
             await repo.AddAsync(category);
             await repo.SaveChangesAsync();
         }

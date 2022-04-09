@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
+using BestPlace.Core.Models.Call;
 using BestPlace.Core.Models.Category;
 using BestPlace.Core.Services;
 using BestPlace.Infrastructure.Data;
@@ -58,6 +59,30 @@ namespace BestPlace.Test
 
             Assert.DoesNotThrowAsync(async () => await service.DeleteCall(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950a")));
         }
+
+        //DeleteItemImage
+        [Test]
+        public async Task UnValidCallMustReturnFalseOnAddCall()
+        {
+
+            var service = serviceProvider.GetService<ICallService>();
+            var call = new CallAddViewModel();
+            Assert.IsFalse(await service.AddCall(call, ""));
+        }
+
+        [Test]
+        public async Task ValidCallMustReturnTrueOnAddCall()
+        {
+
+            var service = serviceProvider.GetService<ICallService>();
+            
+            var call = new CallAddViewModel()
+            {
+                Problem = "",
+            };
+            Assert.IsTrue( await service.AddCall(call, "0f8fad5b-d9cb-469f-a165-70867728950d"));
+        }
+
 
         //GetAllCalls
         [Test]

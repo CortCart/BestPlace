@@ -41,17 +41,27 @@ public class UserService:IUserService
 
     public async Task<UserDetailsViewModel> GetUserDetails(string id)
     {
-        var user = await this.repository.All<ApplicationUser>().Include(x=>x.Image).Include(x=>x.MyItems).FirstOrDefaultAsync(x=>x.Id==id);
+        var user = await this.repository.All<ApplicationUser>().Include(x=>x.MyItems).Include(x=>x.Image).Include(x=>x.MyItems).FirstOrDefaultAsync(x=>x.Id==id);
         if (user == null) throw new ArgumentException("Unknown  user");
-    
-      
 
-        var userRoles = await userManager.GetRolesAsync(user);
-        var items = user.MyItems.Select(x => new UserItemDetailsViewModel
+
+
+        var items = new List<UserItemDetailsWithImageViewModel>();
+        foreach (var item in user.MyItems)
         {
-            Id = x.Id,
-            Name = x.Label
-        }).ToList();
+            var info = await this.repository.All<Item>().Include(x => x.Images)
+                .FirstOrDefaultAsync(x => x.Id == item.Id);
+
+            var itemDetails = new UserItemDetailsWithImageViewModel
+            {
+                Id = info.Id,
+                Name = info.Label,
+                ImageId = info.Images.First().Id
+            };
+            items.Add(itemDetails);
+        }
+          
+        
 
         var imgId = user.Image == null ? Guid.Parse("00000000-0000-0000-0000-000000000000") : user.Image.Id;
 
@@ -64,8 +74,37 @@ public class UserService:IUserService
             Address = user.Address,
             Phone = user.Phone,
             Items = items,
-            Roles = userRoles,
             ImageId =imgId
+        };
+    }
+
+    public async Task<UserDetailsViewModelAsAdmin> GetUserDetailsAsAdmin(string id)
+    {
+        var user = await this.repository.All<ApplicationUser>().Include(x => x.Image).Include(x => x.MyItems).FirstOrDefaultAsync(x => x.Id == id);
+        if (user == null) throw new ArgumentException("Unknown  user");
+
+
+
+        var userRoles = await userManager.GetRolesAsync(user);
+        var items = user.MyItems.Select(x => new UserItemDetailsViewModel
+        {
+            Id = x.Id,
+            Name = x.Label
+        }).ToList();
+
+        var imgId = user.Image == null ? Guid.Parse("00000000-0000-0000-0000-000000000000") : user.Image.Id;
+
+        return new UserDetailsViewModelAsAdmin()
+        {
+            Id = id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Address = user.Address,
+            Phone = user.Phone,
+            Items = items,
+            Roles = userRoles,
+            ImageId = imgId
         };
     }
 
