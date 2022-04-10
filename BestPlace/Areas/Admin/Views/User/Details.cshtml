@@ -44,6 +44,14 @@
                                                 <li><i class="fa fa-envelope-o"></i> : @Model.Email</li>
                                                 <li><i class="fa fa-phone"></i> : @Model.Phone</li>
                                                 <li><i class="fa  fa-home"></i> : @Model.Address</li>
+                                                @if (@Model.FacebookUrl != null)
+                                                {
+                                                    <li><a href="@Model.FacebookUrl">Facebook</a></li>
+                                                }
+                                                @if (@Model.InstagramUrl != null)
+                                                {
+                                                    <li><a href="@Model.InstagramUrl">Instagram</a></li>
+                                                }
                                                 <a asp-area="Admin" asp-controller="User" asp-action="Remove" asp-route-id="@Model.Id" >Remove</a>
 
                                             </ul>

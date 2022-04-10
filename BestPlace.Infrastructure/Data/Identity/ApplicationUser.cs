@@ -30,7 +30,10 @@ public class ApplicationUser : IdentityUser
     [RegularExpression("[+]{1}359 [0-9]{3} [0-9]{4}")]
     public string Phone { get; set; }
 
-    public ICollection<Item> MyItems { get; set; } = new List<Item>();
 
-  
+    public string Facebook { get; set; }
+
+    public string Instagram { get; set; }
+
+    public ICollection<Item> MyItems { get; set; } = new List<Item>();
 }

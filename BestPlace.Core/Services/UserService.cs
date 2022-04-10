@@ -73,6 +73,8 @@ public class UserService:IUserService
             Email = user.Email,
             Address = user.Address,
             Phone = user.Phone,
+            InstagramUrl = user.Instagram,
+            Facebook = user.Facebook,
             Items = items,
             ImageId =imgId
         };
@@ -102,26 +104,72 @@ public class UserService:IUserService
             Email = user.Email,
             Address = user.Address,
             Phone = user.Phone,
+            FacebookUrl = user.Facebook,
+            InstagramUrl = user.Instagram,
             Items = items,
             Roles = userRoles,
             ImageId = imgId
         };
     }
 
-    //public async Task<UserEditViewModel> GetUserForEdit(string id)
-    //{
-    //    var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
+    public async Task<UserEditViewModel> GetUserForEdit(string id)
+    {
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
 
-    //    return new UserEditViewModel()
-    //    {
-    //        FirstName = user.FirstName,
-    //        LastName = user.LastName,
-    //        Email = user.Email,
-    //        Address = user.Address,
-    //        Phone = user.Phone
-    //    };
-    //}
+        return new UserEditViewModel()
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Address = user.Address,
+            Phone = user.Phone,
+            FacebookUrl = user.Facebook,
+            InstagramUrl = user.Instagram
+        };
+    }
 
+    public async Task<bool> EditUser(UserEditViewModel model, string userId)
+    {
+        var user = await this.repository.GetByIdAsync<ApplicationUser>(userId);
+
+        try
+        {
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Address = model.Address;
+            user.Phone = model.Phone;
+            user.Facebook = model.FacebookUrl;
+            user.Instagram = model.InstagramUrl;
+            if (model.Image != null)
+            {
+                byte[] bytes = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+
+                    await model.Image.OpenReadStream().CopyToAsync(ms);
+
+                    bytes = ms.ToArray();
+
+                }
+                if(user.Image!=null) this.repository.Delete(user.Image);
+
+
+                var image = new Image()
+                {
+                    Source = bytes
+                };
+                user.Image = image;
+                user.ImageId = image.Id;
+                await this.repository.AddAsync(image);
+            }
+
+            await this.repository.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
     public async Task<ApplicationUser> GetUserById(string id)
     {

@@ -37,9 +37,12 @@
                            @if (@Model.OwnerId == UserManager.GetUserId(User))
                            {
                                <a asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id"  class="btn btn-primary" ><i ></i>Edit</a>
-
+                               <a asp-controller="Item" asp-action="Remove" asp-route-id="@Model.Id"  class="btn btn-primary" ><i ></i>Remove</a>
                            }
-                            <div class="summary">
+                           
+                          
+                           
+                           <div class="summary">
                                 <p>@Model.Description
                                 </p>
                             </div>

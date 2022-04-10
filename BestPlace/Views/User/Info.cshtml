@@ -11,12 +11,16 @@
             <h2 class="text-info">User info</h2>
             @if(@Model.ImageId!=@Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
-            <img class="card-img-top w-50 d-block" src="@Url.Action( "GetProfileImage", "Image", new { id = @Model.ImageId })">
+                <div class="col-md-6 col-lg-4">
+                    <img class="card-img-top w-50 d-block" src="@Url.Action( "GetProfileImage", "Image", new { id = @Model.ImageId })">
+                </div>
             }
             <p>Name : @Model.FirstName @Model.LastName</p>
             <p>Email : @Model.Email</p>
             <p>Phone : @Model.Phone </p>
             <p>Address : @Model.Address</p>
+            <a asp-area=""asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
+
         </div>
         <div class="row">
             @foreach (var item in @Model.Items)
@@ -26,7 +30,7 @@
                         <div class="card-body">
                             <h4 class="card-title">@item.Name</h4>
                         </div>
-                        <div><a asp-area="" asp-controller="Item" asp-action="Details" asp-route-categoryId="@item.Id" asp-route-query="" class="btn btn-outline-primary btn-sm" type="button">View</a></div>
+                        <div><a asp-area="" asp-controller="Item" asp-action="Details" asp-route-id="@item.Id"  class="btn btn-outline-primary btn-sm" type="button">View</a></div>
                     </div>
                 </div>
             }

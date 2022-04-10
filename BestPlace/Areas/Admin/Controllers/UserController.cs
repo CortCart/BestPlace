@@ -30,15 +30,15 @@ namespace BestPlace.Areas.Admin.Controllers
             this.signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Role()
-        {
+        //public async Task<IActionResult> Role()
+        //{
 
-            var user = await this.userService.GetUserById(  this.userManager.GetUserId(User));
-            var userRoles = await userManager.GetRolesAsync(user);
-            userRoles.Add("Admin");
-            await userManager.AddToRolesAsync(user, userRoles);
-            return Ok();
-        }
+        //    var user = await this.userService.GetUserById(  this.userManager.GetUserId(User));
+        //    var userRoles = await userManager.GetRolesAsync(user);
+        //    userRoles.Add("Admin");
+        //    await userManager.AddToRolesAsync(user, userRoles);
+        //    return Ok();
+        //}
 
         public async Task<IActionResult> Roles(string id)
         {

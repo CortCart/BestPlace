@@ -30,7 +30,16 @@ public class UserDetailsViewModel
     [Display(Name = "Phone")]
     public string Phone { get; set; }
 
-    
+    [Url]
+    [Display(Name = "Instagram")]
+    public string InstagramUrl { get; set; }
+
+
+    [Url]
+    [Display(Name = "Facebook")]
+    public string Facebook { get; set; }
+
+
     [Required]
     [DisplayName("ImageId")]
     public Guid ImageId { get; set; }

@@ -177,5 +177,25 @@ namespace BestPlace.Controllers
             }
           
         }
+        public async Task<IActionResult> Remove(Guid id)
+        {
+
+            try
+            {
+                var item = await this.itemService.GetItemDetails(id);
+                await this.itemService.DeleteItem(id, this.userManager.GetUserId(User));
+                return RedirectToAction("All", new
+                {
+                    categoryId = item.CategoryId,
+                    query = ""
+                });
+            }
+            catch
+            {
+                return View("Error", new ErrorViewModel() { name = "Unknown  item" });
+
+            }
+
+        }
     }
 }
