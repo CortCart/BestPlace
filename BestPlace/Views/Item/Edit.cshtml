@@ -4,6 +4,10 @@
     ViewData["Title"] ="Edit";
     var items = (List<SelectListItem>)ViewBag.Categories;
 }
+@section Scripts {
+    <script src="~/js/imageScript.js"></script>
+    <script src="~/js/delete.js"></script>
+}
 <section class="clean-block clean-form dark">
     <div class="container">
         <div class="block-heading">
@@ -61,5 +65,3 @@
         </form>
     </div>
 </section>
-<script src="~/js/imageScript.js"></script>
-<script src="~/js/delete.js"></script>

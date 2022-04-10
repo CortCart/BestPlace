@@ -1,10 +1,15 @@
 ﻿@using BestPlace.Core.Models.Item
 @using BestPlace.Infrastructure.Data.Identity
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.CodeAnalysis.Scripting
 @model ItemDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
+@section Scripts {
+    <script src="~/js/imageScript.js"></script>
+}
+
 @inject UserManager<ApplicationUser> UserManager
 
 <section class="clean-block clean-catalog dark">
@@ -53,4 +58,3 @@
         </div>
     </div>
 </section>
-<script src="~/js/imageScript.js"></script>
