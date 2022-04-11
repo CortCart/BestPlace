@@ -41,6 +41,7 @@ namespace BestPlace.Controllers
             return View(items);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -66,7 +67,7 @@ namespace BestPlace.Controllers
             }
 
         }
-
+          [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(ItemEditViewModel model)
         {
@@ -108,7 +109,7 @@ namespace BestPlace.Controllers
 
             return RedirectToAction("All", new { categoryId = Guid.Parse(model.CategoryId), query = "" });
         }
-
+        [Authorize]
         public async Task<IActionResult> Add()
         {
             var categories = await this.categoryService.All();
@@ -122,7 +123,7 @@ namespace BestPlace.Controllers
             ViewBag.Categories = categoriesForView;
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(ItemAddViewModel model)
         {
@@ -177,6 +178,7 @@ namespace BestPlace.Controllers
             }
           
         }
+        [Authorize]
         public async Task<IActionResult> Remove(Guid id)
         {
 

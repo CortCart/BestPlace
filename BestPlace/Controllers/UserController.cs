@@ -1,6 +1,7 @@
 ﻿using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.User;
 using BestPlace.Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,11 +22,14 @@ namespace BestPlace.Controllers
             return View(info);
         }
 
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
             var info = await this.userService.GetUserForEdit(id);
             return View(info);
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(UserEditViewModel model)
         {

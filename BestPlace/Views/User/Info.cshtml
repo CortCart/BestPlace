@@ -1,10 +1,14 @@
 ﻿@using BestPlace.Core.Models.User;
+@using BestPlace.Infrastructure.Data.Identity
+@using Microsoft.AspNetCore.Identity
 @model UserDetailsViewModel
 @{
     
         ViewData["Title"] = "Info";
     
 }
+@inject UserManager<ApplicationUser> UserManager
+
 <section class="clean-block clean-services dark">
     <div class="container">
         <div class="block-heading">
@@ -19,7 +23,11 @@
             <p>Email : @Model.Email</p>
             <p>Phone : @Model.Phone </p>
             <p>Address : @Model.Address</p>
-            <a asp-area=""asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
+            @if (@Model.Id ==  UserManager.GetUserId(User))
+            {
+                <a asp-area=""asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
+
+            }
 
         </div>
         <div class="row">

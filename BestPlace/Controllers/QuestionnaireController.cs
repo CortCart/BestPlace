@@ -4,6 +4,7 @@ using BestPlace.Core.Models.Category;
 using BestPlace.Core.Models.Questionnaire;
 using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,7 @@ public class QuestionnaireController:Controller
         var questionnaire = await this.questionnaireService.GetAllQuestionnairiesForUser(this.userManager.GetUserId(User));
         return View(questionnaire);
     }
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> Submit(Guid id)
     {
@@ -34,6 +36,7 @@ public class QuestionnaireController:Controller
         ViewBag.id = id;
         return View();
     }
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Submit(SubmitQuestionnaireAddViewModel model, Guid id)
     {
