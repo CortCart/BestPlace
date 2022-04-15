@@ -95,6 +95,20 @@ namespace BestPlace.Test
             Assert.DoesNotThrowAsync(async () => await service.DeleteItem(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950a"), "0f8fad5b-d9cb-469f-a165-70867728950d"));
         }
 
+        //DeleteItemAsAdmin
+        [Test]
+        public async Task UnkownItemMustThrowOnDeleteItemsAsAdmin()
+        {
+            var service = serviceProvider.GetService<IItemService>();
+            Assert.CatchAsync<ArgumentException>(async () => await service.DeleteItemAsAdmin(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950d")), "Unknown item");
+        }
+        [Test]
+        public async Task KnowItemMustNotThrowOnDeleteItemAsAdmin()
+        {
+            var service = serviceProvider.GetService<IItemService>();
+            Assert.DoesNotThrowAsync(async () => await service.DeleteItemAsAdmin(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950a")));
+        }
+
         //GetItemForEdit
         [Test]
         public async Task UnkownItemMustThrowOnGetItemForEdit()
@@ -166,7 +180,19 @@ namespace BestPlace.Test
             var service = serviceProvider.GetService<IItemService>();
             Assert.DoesNotThrowAsync(async () => await service.GetItemDetails(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950a")));
         }
-
+        //GetItemDetailsAsAdmin
+        [Test]
+        public async Task UnkownItemMustThrowOnGetItemDetailsAsAdmin()
+        {
+            var service = serviceProvider.GetService<IItemService>();
+            Assert.CatchAsync<ArgumentException>(async () => await service.GetItemDetailsAsAdmin(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950d")), "Unknown item");
+        }
+        [Test]
+        public async Task KnowItemMustThrowOnGetItemDetailsAsAdmin()
+        {
+            var service = serviceProvider.GetService<IItemService>();
+            Assert.DoesNotThrowAsync(async () => await service.GetItemDetailsAsAdmin(Guid.Parse("0f8fad5b-d9cb-469f-a165-70867728950a")));
+        }
 
         [TearDown]
         public void TearDown()
