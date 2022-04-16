@@ -3,10 +3,13 @@ using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
 using BestPlace.Core.Models;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.QuestionnaireViewer)]
+
     public class QuestionnaireController : BaseController
     {
 

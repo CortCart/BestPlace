@@ -2,10 +2,13 @@
 using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.Category;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.CategoryViewer)]
+
     public class CategoryController : BaseController
     {
         private readonly ICategoryService categoryService;

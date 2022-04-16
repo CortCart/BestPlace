@@ -1,13 +1,17 @@
-﻿using BestPlace.Core.Contracts;
+﻿using BestPlace.Core.Constants;
+using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.User;
 using BestPlace.Infrastructure.Data.Identity;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.UserViewer)]
+
     public class UserController : BaseController
     {
         private readonly RoleManager<IdentityRole> roleManager;

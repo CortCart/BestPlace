@@ -35,7 +35,17 @@
                                          Answers:
                                          @foreach (var submit in @Model.Submits)
                                          {
-                                             <p ><i> User Name:  </i> : <a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@submit.UserId">@submit.UserName</a> </p>
+                                             @if (User.IsInRole("UserViewer"))
+                                             {
+                                                 <p ><i> User Name:  </i> : <a asp-area="Admin" asp-controller="User"  asp-action="Details" asp-route-id="@submit.UserId">@submit.UserName</a> </p>
+
+                                             }
+                                             else
+                                             {
+                                                 <p ><i> User Name:  </i> : <a >@submit.UserName</a> </p>
+
+                                             }
+
                                              <p ><i> Answer:  </i> :@submit.Answer </p>
                                              @Html.Raw("------\n")
                                          }

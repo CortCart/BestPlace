@@ -1,6 +1,6 @@
-﻿var imgs = document.getElementsByClassName('img-fluid d-block small-preview');
-var remove = document.getElementsByTagName('a')[5];
-let Img = document.getElementsByClassName('zoomed-image')[0];
+﻿var  alllImgs = document.getElementsByClassName('img-fluid d-block small-preview');
+var remove = document.getElementsByTagName('a')[7];
+var Img = document.getElementsByClassName('zoomed-image')[0];
 Img.style = `background-image: url('/Image/GetItemImage/${imgs[0].id}'); background-size: contain; background-position: left center;`;
 
 remove.addEventListener('click', e => {
@@ -21,13 +21,13 @@ remove.addEventListener('click', e => {
 
 
 async function deleteImage(id) {
-    let url = `/Image/DeleteItemImage/${id}`;
-    let method = {
+    var url = `/Image/DeleteItemImage/${id}`;
+    var method = {
         headers: {
             'Content-Type': 'aplication/json'
         },
         method: 'Delete'
     }
-    let $fetch = await fetch(url, method);
+    var $fetch = await fetch(url, method);
 
 }

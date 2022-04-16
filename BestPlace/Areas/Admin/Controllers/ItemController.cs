@@ -1,10 +1,13 @@
 ﻿using BestPlace.Core.Constants;
 using BestPlace.Core.Contracts;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.ItemViewer)]
+
     public class ItemController : BaseController
     {
         private readonly IItemService itemService;

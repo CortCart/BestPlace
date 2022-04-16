@@ -41,10 +41,18 @@
                                                <div class="contact_inner">
                                                    <h3>@Model.Label</h3>
                                                    <ul class="list-unstyled">
-                                                       <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.OwnerId">Owner : @Model.OwnerName</a> </li>
+                                                       @if (User.IsInRole("UserViewer"))
+                                                       {
+                                                           <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.OwnerId">Owner : @Model.OwnerName</a> </li>
+                                                       }
+                                                       else
+                                                       {
+                                                           <li ><i></i><a >Owner : @Model.OwnerName</a> </li>
+  
+                                                       }
                                                        <li><i >$</i> : @Model.Price BGN</li>
                                                        <li><i ></i>Category : @Model.CategoryName</li>
-                                                       <a asp-area="Admin" asp-controller="Item" asp-action="Remove" asp-route-id="@Model.Id" >Remove</a>
+                                                       <a asp-area="Admin" asp-controller="Item" asp-action="Remove" asp-route-id="@Model.Id">Remove</a>
                                                    </ul>
                                                </div>
                                            </div>

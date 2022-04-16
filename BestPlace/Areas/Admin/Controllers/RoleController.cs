@@ -1,9 +1,13 @@
-﻿using BestPlace.Core.Contracts;
+﻿using BestPlace.Core.Constants;
+using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.Roles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.RoleViewer)]
+
     public class RoleController : BaseController
     {
         private  readonly  IRoleService roleService;

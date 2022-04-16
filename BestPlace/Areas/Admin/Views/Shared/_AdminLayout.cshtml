@@ -52,64 +52,84 @@
                   <h4>General</h4>
                   <ul class="list-unstyled components">
                      <li><a  asp-area="Admin" asp-controller="Home" asp-action="Dashboard" ><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a></li>
-                     
-                     <li class="active">
-                        <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Users</span></a>
-                        <ul class="list-unstyled collapse show">
-                           <li>
-                              <a asp-area="Admin" asp-controller="User" asp-action="All">> <span>All</span></a>
-                           </li>
-                        </ul>
-                     </li>
+                  @if (User.IsInRole("UserViewer"))
+                  {
+                      <li class="active">
+                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Users</span></a>
+                          <ul class="list-unstyled collapse show">
+                              <li>
+                                  <a asp-area="Admin" asp-controller="User" asp-action="All">> <span>All</span></a>
+                              </li>
+                          </ul>
+                      </li>
+                  }
+                      @if (User.IsInRole("ItemViewer"))
+                      {
                       <li class="active">
                           <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Items</span></a>
                           <ul class="list-unstyled collapse show">
                               <li>
-                                  <a asp-area="Admin" asp-controller="Item" asp-action="All">> <span>Items</span></a>
+                                  <a asp-area="Admin" asp-controller="Item" asp-action="All">> <span>All</span></a>
                               </li>
                           </ul>
                       </li>
+                      }
+                      @if (User.IsInRole("QuestionnaireViewer"))
+                      {
                       <li class="active">
-                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Questionnaire</span></a>
+                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Questionnaires</span></a>
                           <ul class="list-unstyled collapse show">
                               <li>
-                                  <a asp-area="Admin" asp-controller="Questionnaire" asp-action="All">> <span>Questionnaires</span></a>
+                                  <a asp-area="Admin" asp-controller="Questionnaire" asp-action="All">> <span>All</span></a>
                               </li>
                               <li>
                                   <a asp-area="Admin" asp-controller="Questionnaire" asp-action="Add">> <span>Add</span></a>
                               </li>
                           </ul>
                       </li>
+                      }
+                      @if (User.IsInRole("CategoryViewer"))
+                      {
+                      
                       <li class="active">
-                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Category</span></a>
+                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Categories</span></a>
                           <ul class="list-unstyled collapse show">
                               <li>
-                                  <a asp-area="Admin" asp-controller="Category" asp-action="All">> <span>Categories</span></a>
+                                  <a asp-area="Admin" asp-controller="Category" asp-action="All">> <span>All</span></a>
                               </li>
                               <li>
                                   <a asp-area="Admin" asp-controller="Category" asp-action="Add">> <span>Add</span></a>
                               </li>
                           </ul>
                       </li>
-                      <li class="active">
-                          <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Role</span></a>
-                          <ul class="list-unstyled collapse show">
-                              <li>
-                                  <a asp-area="Admin" asp-controller="Role" asp-action="All">> <span>Roles</span></a>
-                              </li>
-                              <li>
-                                  <a asp-area="Admin" asp-controller="Role" asp-action="Add">> <span>Add</span></a>
-                              </li>
-                          </ul>
-                      </li>
+                      }
+                      
+                      
+                      @if (User.IsInRole("RoleViewer"))
+                      {
+                          <li class="active">
+                              <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Roles</span></a>
+                              <ul class="list-unstyled collapse show">
+                                  <li>
+                                      <a asp-area="Admin" asp-controller="Role" asp-action="All">> <span>All</span></a>
+                                  </li>
+                                  <li>
+                                      <a asp-area="Admin" asp-controller="Role" asp-action="Add">> <span>Add</span></a>
+                                  </li>
+                              </ul>
+                          </li>
+                      }
+                  @if (User.IsInRole("CallViewer"))
+                  {
                       <li class="active">
                           <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Calls</span></a>
                           <ul class="list-unstyled collapse show">
                               <li>
-                                  <a asp-area="Admin" asp-controller="Call" asp-action="All">> <span>Calls</span></a>
+                                  <a asp-area="Admin" asp-controller="Call" asp-action="All">> <span>All</span></a>
                               </li>
                           </ul>
                       </li>
+                  }
                   </ul>
                </div>
             </nav>

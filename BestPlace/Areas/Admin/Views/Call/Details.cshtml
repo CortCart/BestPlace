@@ -34,10 +34,19 @@
                                           <div class="profile_contant">
                                               <div class="contact_inner">
                                                   <ul class="list-unstyled">
-                                                      <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.UserId">User : @Model.Name</a> </li>
+                                                      @if (User.IsInRole("UserViewer"))
+                                                      {
+                                                          <li ><i></i><a asp-area="Admin" asp-action="Details" asp-route-id="@Model.UserId">User : @Model.Name</a> </li>
+
+                                                      }
+                                                      else
+                                                      {
+                                                          <li ><i></i><a>User : @Model.Name</a> </li>
+
+                                                      }
                                                       <li ><i></i>Email : @Model.Email</li>
 
-                                                      <a asp-area="Admin" asp-controller="Call" asp-action="Remove" asp-route-id="@Model.Id" >Remove</a>
+                                                      <a asp-area="Admin" asp-controller="Call" asp-action="Remove" asp-route-id="@Model.Id">Remove</a>
                                                   </ul>
                                               </div>
                                           </div>

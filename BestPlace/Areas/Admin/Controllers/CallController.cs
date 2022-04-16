@@ -1,9 +1,12 @@
 ﻿using BestPlace.Core.Constants;
 using BestPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BestPlace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = UserConstants.Roles.CallViewer)]
+
     public class CallController : BaseController
     {
         private readonly ICallService callService;

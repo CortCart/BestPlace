@@ -36,7 +36,7 @@
                                         {
                                             <img width="180" class="img-responsive" src="@Url.Action("GetProfileImage", "Image", new {id = @Model.ImageId})" alt="#"/>
                                         }
-                                        </div>
+                                    </div>
                                     <div class="profile_contant">
                                         <div class="contact_inner">
                                             <h3>@Model.FirstName @Model.LastName</h3>
@@ -58,27 +58,37 @@
                                         </div>
                                     </div>
                                 </div>
-                                Items
-                                <div>
-                                    @foreach (var item in  @Model.Items)
+                                @if (User.IsInRole("ItemViewer"))
+                                {
+                                    @Html.Raw("Items")
+                                        <div>
+                                        @foreach(var item in  @Model.Items)
                                     {
-                                        <p class="name_user"><a asp-area="Admin" asp-controller="Item" asp-action="Details" asp-route-id="@item.Id">@item.Name</a> </p>
-                                        @Html.Raw("------\n")                        
+                                    <p class="name_user" ><a asp - area = "Admin"asp - controller = "Item"asp - action = "Details"asp - route - id = "@item.Id" > @item.Name </a > </p >
+                                        @Html.Raw("------\n")
                                     }
-                                    --
-                                </div>
-                                       
-                                Roles
-                                <div>
-                                    @foreach (var role in  @Model.Roles)
-                                    {
-                                        <p class="name_user">@role </p>
-                                        @Html.Raw("------\n")                        
-                                    }
-                                    --
+                                        @Html.Raw("--")     
 
-                                </div>
-                                        
+                                        </div >
+
+                                }
+                              
+                                       @if (User.IsInRole("RoleViewer"))
+                                       {
+
+
+                                        @Html.Raw("Roles");
+                                               <div>
+                                               @foreach(var role in  @Model.Roles)
+                                           {
+                                           <p class="name_user" > @role </p >
+                                               @Html.Raw("------\n")
+                                           }
+
+                                               @Html.Raw("--")     
+
+                                           </div >
+                                       }
                             </div>
                         </div>
                     </div>

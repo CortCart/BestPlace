@@ -45,8 +45,10 @@
                                                <td>@user.Phone</td>
                                                <th><a asp-area="admin" asp-action="Remove" asp-controller="User" asp-route-id ="@user.Id"> Remove</a></th>
                                                <th><a asp-area="admin" asp-action="Details" asp-controller="User" asp-route-id ="@user.Id">Info</a></th>
-                                               <th><a asp-area="admin" asp-action="Roles" asp-controller="User" asp-route-id ="@user.Id"> Roles</a></th>
-
+                                               @if (User.IsInRole("RoleViewer"))
+                                               {
+                                                   <th><a asp-area="admin" asp-action="Roles" asp-controller="User" asp-route-id="@user.Id"> Roles</a></th>
+                                               }
                                                </tr>
                                        }
                                       

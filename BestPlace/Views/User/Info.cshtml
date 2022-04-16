@@ -23,12 +23,22 @@
             <p>Email : @Model.Email</p>
             <p>Phone : @Model.Phone </p>
             <p>Address : @Model.Address</p>
+           
+            @if (@Model.Facebook != null)
+            {
+                <a href="@Model.Facebook" >Facebook</a>
+
+            }
+            @if (@Model.InstagramUrl != null)
+            {
+                <a href="@Model.InstagramUrl" >Instagram</a>
+
+            }
             @if (@Model.Id ==  UserManager.GetUserId(User))
             {
                 <a asp-area=""asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id" >Edit</a>
 
             }
-
         </div>
         <div class="row">
             @foreach (var item in @Model.Items)
