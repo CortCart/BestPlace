@@ -61,7 +61,6 @@ public class ItemService : IItemService
             {
                 Id = x.Id,
                 Label = x.Label,
-                Likes = x.Likes,
                 CategoryId = x.CategoryId,
                 CategoryName = x.Category.Name,
                 Price = x.Price,
@@ -155,7 +154,6 @@ public class ItemService : IItemService
             Id = item.Id,
             Label = item.Label,
             Description = item.Description,
-            Likes = item.Likes,
             Price = item.Price,
             OwnerId = item.OwnerId,
             OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",
@@ -179,7 +177,6 @@ public class ItemService : IItemService
             Id = item.Id,
             Label = item.Label,
             Description = item.Description, 
-            Likes = item.Likes,
             Price = item.Price,
             OwnerId = item.OwnerId,
             OwnerName = $"{item.Owner.FirstName} {item.Owner.LastName}",

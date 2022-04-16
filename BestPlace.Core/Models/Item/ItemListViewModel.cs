@@ -10,7 +10,6 @@ public class ItemListViewModel
 
     public decimal Price { get; set; }
 
-    public int Likes { get; set; } = 0;
 
     public Guid CategoryId { get; set; }
 

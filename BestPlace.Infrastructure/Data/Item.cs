@@ -21,7 +21,6 @@ public class Item
     [Required]
     public decimal Price { get; set; }
 
-    public int Likes { get; set; } = 0;
 
     [Required]
     public string OwnerId { get; set; }
