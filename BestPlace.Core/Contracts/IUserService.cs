@@ -13,7 +13,7 @@ public interface IUserService
 
     Task<ApplicationUser> GetUserById(string id);
 
-    Task<UserEditViewModel> GetUserForEdit(string id);
+    Task<UserEditViewModel> GetUserForEdit(string id, string myId);
 
     Task<bool> EditUser(UserEditViewModel model, string userId);
 

@@ -112,9 +112,10 @@ public class UserService:IUserService
         };
     }
 
-    public async Task<UserEditViewModel> GetUserForEdit(string id)
+    public async Task<UserEditViewModel> GetUserForEdit(string id , string myId)
     {
-        var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
+        if (id != myId) throw new ArgumentException("You can't edit foreign profile");
+            var user = await this.repository.GetByIdAsync<ApplicationUser>(id);
 
         return new UserEditViewModel()
         {

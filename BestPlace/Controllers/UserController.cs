@@ -1,6 +1,7 @@
 ﻿using BestPlace.Core.Contracts;
 using BestPlace.Core.Models.User;
 using BestPlace.Infrastructure.Data.Identity;
+using BestPlace.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +27,17 @@ namespace BestPlace.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var info = await this.userService.GetUserForEdit(id);
-            return View(info);
+            try
+            {
+                var info = await this.userService.GetUserForEdit(id, this.userManager.GetUserId(User));
+                return View(info);
+            }
+            catch 
+            {
+                return View("Error", new ErrorViewModel() { name = "You can't edit foreign profile" });
+
+            }
+
         }
         [Authorize]
         [HttpPost]
